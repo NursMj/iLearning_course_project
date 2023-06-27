@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense, useState } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Header from './components/Header'
+import HomePage from './pages/HomePage'
+import AuthRegPage from './pages/AuthRegPage'
+import AdminPage from './pages/AdminPage'
+import UserPage from './pages/UserPage'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+
 
 function App() {
-  const [count, setCount] = useState(25)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage/>} />
+        <Route path="/registration" element={<AuthRegPage/>} />
+        <Route path="/login" element={<AuthRegPage/>} />
+        <Route path="/admin" element={<AdminPage/>} />
+        <Route path="/user" element={<UserPage/>} />
+        <Route path='*' element={<Navigate to='/'/>} />
+      </Routes>
+  </BrowserRouter>
+
+
+
   )
 }
 
-export default App
+export default function WrappedApp() {
+  const [darkMode, setDarkMode] = useState(true)
+  const darkTheme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark': 'light',
+    },
+  })
+
+  return (
+    <Suspense fallback='...loading'>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </Suspense>
+  )
+}

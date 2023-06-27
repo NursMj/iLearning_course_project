@@ -1,0 +1,28 @@
+{
+  "header": {
+    "title": "iLearning Course project",
+    "app_name": "Collections",
+    "login": "Login"
+  },
+  "login_form": {
+    "title_login": "LOGIN",
+    "title_registration": "REGISTRATION",
+    "name": "Name",
+    "name_placeholder": "Enter your name",
+    "email": "Email",
+    "email_placeholder": "Enter email address",
+    "password": "Password",
+    "password_placeholder": "Enter password",
+    "btn_login": "Login",
+    "btn_register": "Sign Up",
+    "dont_have_ac": "Don't have account?",
+    "singup_link": "Sign Up",
+    "have_ac": "Allready have account?",
+    "login_link": "Login"
+  },
+  "home": {
+    "last_added_items": "Last added items",
+    "5_biggest_collections": "5 biggest collections",
+    "teg_cloud": "Teg cloud"
+  }
+}

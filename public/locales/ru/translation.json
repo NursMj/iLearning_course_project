@@ -1,0 +1,28 @@
+{
+  "header": {
+    "title": "iLearning Курсовой проект",
+    "app_name": "Колекции",
+    "login": "Войти"
+  },
+  "login_form": {
+    "title_login": "ВОЙТИ",
+    "title_registration": "РЕГИСТРАЦИЯ",
+    "name": "Имя",
+    "name_placeholder": "Введите ваше имя",
+    "email": "Почта",
+    "email_placeholder": "Введите вашу почту",
+    "password": "Пароль",
+    "password_placeholder": "Введите пароль",
+    "btn_login": "Войти",
+    "btn_register": "Регистрация",
+    "dont_have_ac": "У вас нету аккаунта?",
+    "singup_link": "Создать",
+    "have_ac": "У вас уже есть аккаунт?",
+    "login_link": "Войти"
+  },
+  "home": {
+    "last_added_items": "Последние айтемы",
+    "5_biggest_collections": "5 самых больших коллекций",
+    "teg_cloud": "Облоко тегов"
+  }
+}

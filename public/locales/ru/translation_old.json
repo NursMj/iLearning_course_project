@@ -1,0 +1,12 @@
+{
+  "test_messages": "",
+  "main": {
+    "header": "Курсовой проект",
+    "new_messages_one": "У вас одно новое сообшение",
+    "new_messages_few": "У вас {{count}} новых сообщения",
+    "new_messages_many": "У вас {{count}} новых сообщений",
+    "new_messages_other": "",
+    "current_date": "Сегодня {{date, DATE_LONG}}"
+  },
+  "demo": "Демонстрация"
+}
