@@ -1,7 +1,7 @@
 import { Card } from 'react-bootstrap'
 
 function ItemCard(props: any) {
-    const {item, type} = props
+    const {item} = props
 
     return (
          
