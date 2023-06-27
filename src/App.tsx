@@ -30,7 +30,7 @@ function App() {
 }
 
 export default function WrappedApp() {
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode] = useState(true)
   const darkTheme = createTheme({
     palette: {
       mode: darkMode ? 'dark': 'light',
