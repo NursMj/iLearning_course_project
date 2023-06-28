@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react'
+import { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Header from './components/Header'
 import HomePage from './pages/HomePage'
@@ -7,6 +7,7 @@ import AdminPage from './pages/AdminPage'
 import UserPage from './pages/UserPage'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import { useSelector } from 'react-redux'
 
 
 function App() {
@@ -30,10 +31,10 @@ function App() {
 }
 
 export default function WrappedApp() {
-  const [darkMode] = useState(true)
+  const isDarkMode = useSelector((state: any)=>state.darkMode.darkMode)
   const darkTheme = createTheme({
     palette: {
-      mode: darkMode ? 'dark': 'light',
+      mode: isDarkMode ? 'dark': 'light',
     },
   })
 
