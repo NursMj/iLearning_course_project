@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap"
+import Container from '@mui/material/Container'
 import { useTranslation } from 'react-i18next'
 import ItemsList from "../components/ItemsList"
 

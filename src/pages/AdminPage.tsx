@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap"
+import Container from '@mui/material/Container'
 
 function AdminPage() {
   return (

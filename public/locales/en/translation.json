@@ -1,25 +1,27 @@
 {
   "header": {
     "title": "Collections",
+    "app_name": "",
     "login": "Login",
     "menu_item1": "My collections",
-    "menu_item2": "Login"
+    "menu_item2": "Login",
+    "search_placeholder": "Search..."
   },
   "login_form": {
-    "title_login": "LOGIN",
-    "title_registration": "REGISTRATION",
+    "title_login": "SIGN IN",
+    "title_registration": "SIGN UP",
     "name": "Name",
     "name_placeholder": "Enter your name",
     "email": "Email",
     "email_placeholder": "Enter email address",
     "password": "Password",
     "password_placeholder": "Enter password",
-    "btn_login": "Login",
+    "btn_login": "Sign in",
     "btn_register": "Sign Up",
-    "dont_have_ac": "Don't have account?",
+    "dont_have_ac": "Haven't signed up yet?",
     "singup_link": "Sign Up",
-    "have_ac": "Allready have account?",
-    "login_link": "Login"
+    "have_ac": "Already have signed up?",
+    "login_link": "Sign in"
   },
   "home": {
     "last_added_items": "Last added items",

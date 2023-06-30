@@ -1,8 +1,11 @@
 {
   "header": {
     "title": "Колекции",
+    "app_name": "",
+    "login": "",
     "menu_item1": "Мои колекции",
-    "menu_item2": "Ввыйти"
+    "menu_item2": "Ввыйти",
+    "search_placeholder": "Поиск..."
   },
   "login_form": {
     "title_login": "ВОЙТИ",
@@ -15,9 +18,9 @@
     "password_placeholder": "Введите пароль",
     "btn_login": "Войти",
     "btn_register": "Регистрация",
-    "dont_have_ac": "У вас нету аккаунта?",
+    "dont_have_ac": "Еще не зарегистрированы?",
     "singup_link": "Создать",
-    "have_ac": "У вас уже есть аккаунт?",
+    "have_ac": "Уже зарегистрированы?",
     "login_link": "Войти"
   },
   "home": {
