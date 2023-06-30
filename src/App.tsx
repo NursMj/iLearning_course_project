@@ -9,32 +9,29 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { useSelector } from 'react-redux'
 
-
 function App() {
-
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route path="/" element={<HomePage/>} />
-        <Route path="/registration" element={<AuthRegPage/>} />
-        <Route path="/login" element={<AuthRegPage/>} />
-        <Route path="/admin" element={<AdminPage/>} />
-        <Route path="/user" element={<UserPage/>} />
-        <Route path='*' element={<Navigate to='/'/>} />
-      </Routes>
-  </BrowserRouter>
-
-
-
+      <div style={{paddingBottom: '50px'}}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/registration" element={<AuthRegPage />} />
+          <Route path="/login" element={<AuthRegPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/user" element={<UserPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 
 export default function WrappedApp() {
-  const isDarkMode = useSelector((state: any)=>state.darkMode.darkMode)
+  const isDarkMode = useSelector((state: any) => state.darkMode.darkMode)
   const darkTheme = createTheme({
     palette: {
-      mode: isDarkMode ? 'dark': 'light',
+      mode: isDarkMode ? 'dark' : 'light',
       primary: {
         main: '#007bff',
       },
@@ -42,7 +39,7 @@ export default function WrappedApp() {
   })
 
   return (
-    <Suspense fallback='...loading'>
+    <Suspense fallback="...loading">
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <App />
