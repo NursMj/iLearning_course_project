@@ -156,7 +156,9 @@ export default function Header() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            {t('header.title')}
+            <Link to='/' className='text-decoration-none'>
+              {t('header.title')}
+            </Link>
           </Typography>
           <Search>
             <SearchIconWrapper>
