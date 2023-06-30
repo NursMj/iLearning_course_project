@@ -1,27 +1,28 @@
 {
   "header": {
-    "title": "Колекции",
-    "app_name": "",
-    "login": "",
+    "menu_item3": "Кабинет администратора",
     "menu_item1": "Мои колекции",
     "menu_item2": "Выйти",
-    "search_placeholder": "Поиск..."
+    "title": "Колекции",
+    "search_placeholder": "Поиск...",
+    "sign_in": "Войти",
+    "sign_up": "Регистрация"
   },
   "login_form": {
     "title_login": "ВОЙТИ",
     "title_registration": "РЕГИСТРАЦИЯ",
     "name": "Имя",
-    "name_placeholder": "Введите ваше имя",
     "email": "Почта",
-    "email_placeholder": "Введите вашу почту",
     "password": "Пароль",
-    "password_placeholder": "Введите пароль",
     "btn_login": "Войти",
     "btn_register": "Регистрация",
     "dont_have_ac": "Еще не зарегистрированы?",
-    "singup_link": "Создать",
+    "singup_link": "Зарегистрироваться",
     "have_ac": "Уже зарегистрированы?",
-    "login_link": "Войти"
+    "login_link": "Войти",
+    "name_placeholder": "Введите ваше имя",
+    "email_placeholder": "Введите вашу почту",
+    "password_placeholder": "Введите пароль"
   },
   "home": {
     "last_added_items": "Последние айтемы",

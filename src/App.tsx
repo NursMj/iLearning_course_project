@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage'
 import AuthRegPage from './pages/AuthRegPage'
 import AdminPage from './pages/AdminPage'
 import UserPage from './pages/UserPage'
+import CollectionPage from './pages/CollectionPage'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { useSelector } from 'react-redux'
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<AuthRegPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/user" element={<UserPage />} />
+          <Route path="/collection" element={<CollectionPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

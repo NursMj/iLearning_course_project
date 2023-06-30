@@ -22,23 +22,26 @@ function AuthRegPage() {
   const navigate = useNavigate()
 
   function storeEmail() {
-    localStorage.setItem('email', email);
+    localStorage.setItem('email', email)
   }
 
-  async function handleLogin(e: any){
+  async function handleLogin(e: any) {
     e.preventDefault()
     if (password.length > 0 && email != '') {
       // setIsLoading(true)
       // setError('')
       try {
-        const response = await fetch(import.meta.env.VITE_API_URL + 'users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({email: email, password: password}),
-      })
-      if (response.ok) {
+        const response = await fetch(
+          import.meta.env.VITE_API_URL + 'users/login',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+          }
+        )
+        if (response.ok) {
           // setIsAuth(true)
           storeEmail()
           navigate('/admin')
@@ -62,14 +65,21 @@ function AuthRegPage() {
       // setError('')
       // setIsLoading(true)
       try {
-        const response = await fetch(import.meta.env.VITE_API_URL+"users/registration", {
-          method: "POST",
-          headers: {"Content-Type": "application/json",},
-          body: JSON.stringify({name: userName,email: email,password: password,}),
-        })
-        if(response.ok) {
-          const responseData = await response.json();
-          alert(responseData.message);
+        const response = await fetch(
+          import.meta.env.VITE_API_URL + 'users/registration',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: userName,
+              email: email,
+              password: password,
+            }),
+          }
+        )
+        if (response.ok) {
+          const responseData = await response.json()
+          alert(responseData.message)
           navigate('/')
         } else {
           // const responseData = await response.json();
@@ -77,7 +87,7 @@ function AuthRegPage() {
         }
       } catch (error) {
         // setError('Sorry but something went wrong on the server side, please try again later')
-        console.log(error);
+        console.log(error)
       }
       // setIsLoading(false)
     } else {
@@ -161,18 +171,20 @@ function AuthRegPage() {
             {isLogin ? (
               <Grid item>
                 {t('login_form.dont_have_ac')}{' '}
-                <NavLink 
-                // onClick={() => setError('')} 
-                to="/registration">
+                <NavLink
+                  // onClick={() => setError('')}
+                  to="/registration"
+                >
                   {t('login_form.singup_link')}
                 </NavLink>
               </Grid>
             ) : (
               <Grid item>
                 {t('login_form.have_ac')}{' '}
-                <NavLink 
-                // onClick={() => setError('')} 
-                to="/login">
+                <NavLink
+                  // onClick={() => setError('')}
+                  to="/login"
+                >
                   {t('login_form.login_link')}
                 </NavLink>
               </Grid>

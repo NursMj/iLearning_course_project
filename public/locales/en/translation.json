@@ -1,27 +1,28 @@
 {
   "header": {
-    "title": "Collections",
-    "app_name": "",
-    "login": "Login",
+    "menu_item3": "Admin page",
     "menu_item1": "My collections",
-    "menu_item2": "Login",
-    "search_placeholder": "Search..."
+    "menu_item2": "Log out",
+    "title": "Collections",
+    "search_placeholder": "Search...",
+    "sign_in": "Sign in",
+    "sign_up": "Sign up"
   },
   "login_form": {
     "title_login": "SIGN IN",
     "title_registration": "SIGN UP",
     "name": "Name",
-    "name_placeholder": "Enter your name",
     "email": "Email",
-    "email_placeholder": "Enter email address",
     "password": "Password",
-    "password_placeholder": "Enter password",
     "btn_login": "Sign in",
     "btn_register": "Sign Up",
     "dont_have_ac": "Haven't signed up yet?",
     "singup_link": "Sign Up",
     "have_ac": "Already have signed up?",
-    "login_link": "Sign in"
+    "login_link": "Sign in",
+    "name_placeholder": "Enter your name",
+    "email_placeholder": "Enter email address",
+    "password_placeholder": "Enter password"
   },
   "home": {
     "last_added_items": "Last added items",

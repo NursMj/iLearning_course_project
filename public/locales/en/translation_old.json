@@ -6,5 +6,9 @@
     "new_messages_other": "You have {{count}} new messages",
     "current_date": "Today is {{date, DATE_LONG}}"
   },
-  "demo": "deonstations"
+  "demo": "deonstations",
+  "header": {
+    "app_name": "",
+    "login": "Login"
+  }
 }

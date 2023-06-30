@@ -1,7 +1,15 @@
 import * as React from 'react'
 import { styled, alpha } from '@mui/material/styles'
-import {AppBar, Box, IconButton, Toolbar, Typography, InputBase, MenuItem, Menu} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+  InputBase,
+  MenuItem,
+} from '@mui/material'
+import { Button } from 'react-bootstrap'
 import SearchIcon from '@mui/icons-material/Search'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MoreIcon from '@mui/icons-material/MoreVert'
@@ -9,9 +17,10 @@ import DarkModeSwitch from './DarkModeSwitch'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUnsetDarkMode } from '../store/darkModeReducer'
 import LanguageSelect from './LanguageSelect'
-import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-
+import MyLink from '../common/MyLink'
+import HeaderMenu from './HeaderMenu'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -27,7 +36,7 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(3),
     width: 'auto',
   },
-}));
+}))
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -37,7 +46,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}));
+}))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -50,114 +59,59 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '20ch',
     },
   },
-}));
+}))
 
 export default function Header() {
+  const location = useLocation()
+  const isSigning =
+    location.pathname === '/login' || location.pathname === '/registration'
   const { t } = useTranslation()
-  const isDarkMode = useSelector((state: any)=>state.darkMode.darkMode)
+  const isDarkMode = useSelector((state: any) => state.darkMode.darkMode)
   const dispatch = useDispatch()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+    React.useState<null | HTMLElement>(null)
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuOpen = Boolean(anchorEl)
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
+  const isAdmin = true
+  const [isAuth, setIsAuth] = React.useState(true)
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+    setMobileMoreAnchorEl(null)
+  }
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+    setAnchorEl(null)
+    handleMobileMenuClose()
+  }
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+    setMobileMoreAnchorEl(event.currentTarget)
+  }
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>
-      {t('header.menu_item1')}
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>{t('header.menu_item2')}</MenuItem>
-    </Menu>
-  );
+  function handleLogout() {
+    setIsAuth(false)
+  }
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+  const menuId = 'account-menu'
+  const mobileMenuId = 'account-menu-mobile'
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
-            variant="h6"
+            variant="h4"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' }, }}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            <Link to='/' style={{ textDecoration: 'none', color: "inherit" }}>
-              {t('header.title')}
-            </Link>
+            <MyLink to="/" content={t('header.title')} />
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -169,20 +123,53 @@ export default function Header() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-            <DarkModeSwitch checked={isDarkMode} onChange={()=> dispatch(setUnsetDarkMode())} />
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              gap: 2,
+              alignItems: 'center',
+            }}
+          >
+            <DarkModeSwitch
+              checked={isDarkMode}
+              onChange={() => dispatch(setUnsetDarkMode())}
+            />
             <LanguageSelect />
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {isAuth ? (
+              isAdmin ? (
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              ) : (
+                <MyLink
+                  to="/user"
+                  content={
+                    <MenuItem onClick={handleMenuClose}>
+                      {t('header.menu_item1')}
+                    </MenuItem>
+                  }
+                />
+              )
+            ) : (
+              !isSigning && (
+                <MyLink
+                  to="/login"
+                  content={
+                    <Button variant="outline-light">
+                      {t('header.sign_in')}
+                    </Button>
+                  }
+                />
+              )
+            )}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -198,8 +185,21 @@ export default function Header() {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      <HeaderMenu
+        props={{
+          menuId,
+          mobileMenuId,
+          anchorEl,
+          mobileMoreAnchorEl,
+          isMenuOpen,
+          isMobileMenuOpen,
+          handleMenuClose,
+          handleMobileMenuClose,
+          handleProfileMenuOpen,
+          isAdmin,
+          handleLogout,
+        }}
+      />
     </Box>
-  );
+  )
 }

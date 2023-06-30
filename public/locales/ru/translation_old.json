@@ -8,5 +8,9 @@
     "new_messages_other": "",
     "current_date": "Сегодня {{date, DATE_LONG}}"
   },
-  "demo": "Демонстрация"
+  "demo": "Демонстрация",
+  "header": {
+    "app_name": "",
+    "login": ""
+  }
 }
