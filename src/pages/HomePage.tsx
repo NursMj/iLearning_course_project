@@ -23,7 +23,7 @@ function HomePage() {
     { id: 4, title: 'collection4' },
     { id: 5, title: 'collection5' },
   ]
-  const tags = ['banana', 'apple', 'orange', 'pear']
+  // const tags = ['banana', 'apple', 'orange', 'pear']
 
   return (
     <Container>
