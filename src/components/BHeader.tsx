@@ -1,19 +1,9 @@
-import { useTranslation } from 'react-i18next'
 import { Container, Navbar, Button } from "react-bootstrap"
 import { Link } from 'react-router-dom'
-
-
-const locales: MyObject = {
-  en: {title: 'En'},
-  ru: {title: 'Ru'},
-}
-
-interface MyObject {
-  [key: string]: { title: string };
-}
+import { useTranslation } from 'react-i18next'
 
 function Header() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   function logOut(): any {
 
@@ -28,18 +18,7 @@ function Header() {
             </Navbar.Brand>
           </Link>
           <div className='d-flex gap-3 align-items-center'>
-            <ul className='m-0'>
-              {Object.keys(locales).map(l => (
-                <li key={l}>
-                  <button
-                    style={{ fontWeight: i18n.resolvedLanguage === l ? 'bold' : 'normal' }}
-                    onClick={()=> i18n.changeLanguage(l)}
-                  >
-                    {locales[l].title}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            
             <Button onClick={logOut}>{t('header.login')}</Button>
           </div>
         </Container>

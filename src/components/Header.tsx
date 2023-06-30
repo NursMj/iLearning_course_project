@@ -8,6 +8,9 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import DarkModeSwitch from './DarkModeSwitch'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUnsetDarkMode } from '../store/darkModeReducer'
+import LanguageSelect from './LanguageSelect'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -51,6 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { t } = useTranslation()
   const isDarkMode = useSelector((state: any)=>state.darkMode.darkMode)
   const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -94,8 +98,10 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+      {t('header.menu_item1')}
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>{t('header.menu_item2')}</MenuItem>
     </Menu>
   );
 
@@ -150,7 +156,7 @@ export default function Header() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            {t('header.title')}
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -164,6 +170,7 @@ export default function Header() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
             <DarkModeSwitch checked={isDarkMode} onChange={()=> dispatch(setUnsetDarkMode())} />
+            <LanguageSelect />
             <IconButton
               size="large"
               edge="end"

@@ -1,8 +1,9 @@
 {
   "header": {
-    "title": "iLearning Course project",
-    "app_name": "Collections",
-    "login": "Login"
+    "title": "Collections",
+    "login": "Login",
+    "menu_item1": "My collections",
+    "menu_item2": "Login"
   },
   "login_form": {
     "title_login": "LOGIN",

@@ -1,8 +1,8 @@
 {
   "header": {
-    "title": "iLearning Курсовой проект",
-    "app_name": "Колекции",
-    "login": "Войти"
+    "title": "Колекции",
+    "menu_item1": "Мои колекции",
+    "menu_item2": "Ввыйти"
   },
   "login_form": {
     "title_login": "ВОЙТИ",

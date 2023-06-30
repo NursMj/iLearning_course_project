@@ -35,6 +35,9 @@ export default function WrappedApp() {
   const darkTheme = createTheme({
     palette: {
       mode: isDarkMode ? 'dark': 'light',
+      primary: {
+        main: '#007bff',
+      },
     },
   })
 
