@@ -9,6 +9,13 @@
   "demo": "deonstations",
   "header": {
     "app_name": "",
-    "login": "Login"
+    "login": "Login",
+    "sign_up": "Sign up"
+  },
+  "toolbar": {
+    "create": "add",
+    "delete": "detete",
+    "add": "add",
+    "edit": "edit"
   }
 }

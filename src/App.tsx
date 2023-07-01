@@ -6,7 +6,10 @@ import AuthRegPage from './pages/AuthRegPage'
 import AdminPage from './pages/AdminPage'
 import UserPage from './pages/UserPage'
 import CollectionPage from './pages/CollectionPage'
+import ItemPage from './pages/ItemPage'
+import SearchResultPage from './pages/SearchResultPage'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import { useSelector } from 'react-redux'
 
@@ -14,17 +17,19 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <div style={{paddingBottom: '50px'}}>
+      <Container style={{paddingTop: '60px', paddingBottom: '60px'}}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/registration" element={<AuthRegPage />} />
           <Route path="/login" element={<AuthRegPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/user" element={<UserPage />} />
-          <Route path="/collection" element={<CollectionPage />} />
+          <Route path="/collection/:id" element={<CollectionPage />} />
+          <Route path="/item/:id" element={<ItemPage />} />
+          <Route path="/search-result" element={<SearchResultPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </div>
+      </Container>
     </BrowserRouter>
   )
 }

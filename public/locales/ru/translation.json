@@ -1,12 +1,11 @@
 {
   "header": {
-    "menu_item3": "Кабинет администратора",
-    "menu_item1": "Мои колекции",
-    "menu_item2": "Выйти",
     "title": "Колекции",
     "search_placeholder": "Поиск...",
     "sign_in": "Войти",
-    "sign_up": "Регистрация"
+    "menu_item3": "Кабинет администратора",
+    "menu_item1": "Мои колекции",
+    "menu_item2": "Выйти"
   },
   "login_form": {
     "title_login": "ВОЙТИ",
@@ -28,5 +27,8 @@
     "last_added_items": "Последние айтемы",
     "5_biggest_collections": "5 самых больших коллекций",
     "teg_cloud": "Облоко тегов"
+  },
+  "user": {
+    "title": "Ваши коллекции"
   }
 }

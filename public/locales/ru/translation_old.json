@@ -11,6 +11,13 @@
   "demo": "Демонстрация",
   "header": {
     "app_name": "",
-    "login": ""
+    "login": "",
+    "sign_up": "Регистрация"
+  },
+  "toolbar": {
+    "create": "",
+    "delete": "удалить",
+    "add": "добавить",
+    "edit": "изменить"
   }
 }

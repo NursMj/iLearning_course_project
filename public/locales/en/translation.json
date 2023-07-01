@@ -1,12 +1,11 @@
 {
   "header": {
-    "menu_item3": "Admin page",
-    "menu_item1": "My collections",
-    "menu_item2": "Log out",
     "title": "Collections",
     "search_placeholder": "Search...",
     "sign_in": "Sign in",
-    "sign_up": "Sign up"
+    "menu_item3": "Admin page",
+    "menu_item1": "My collections",
+    "menu_item2": "Log out"
   },
   "login_form": {
     "title_login": "SIGN IN",
@@ -28,5 +27,8 @@
     "last_added_items": "Last added items",
     "5_biggest_collections": "5 biggest collections",
     "teg_cloud": "Teg cloud"
+  },
+  "user": {
+    "title": "Your collections"
   }
 }

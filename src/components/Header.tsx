@@ -7,7 +7,6 @@ import {
   Toolbar,
   Typography,
   InputBase,
-  MenuItem,
 } from '@mui/material'
 import { Button } from 'react-bootstrap'
 import SearchIcon from '@mui/icons-material/Search'
@@ -74,7 +73,7 @@ export default function Header() {
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-  const isAdmin = true
+  const isAdmin = false
   const [isAuth, setIsAuth] = React.useState(true)
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -149,14 +148,17 @@ export default function Header() {
                   <AccountCircle />
                 </IconButton>
               ) : (
-                <MyLink
-                  to="/user"
-                  content={
-                    <MenuItem onClick={handleMenuClose}>
-                      {t('header.menu_item1')}
-                    </MenuItem>
-                  }
-                />
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
               )
             ) : (
               !isSigning && (

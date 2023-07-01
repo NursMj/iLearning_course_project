@@ -1,4 +1,3 @@
-import Container from '@mui/material/Container'
 import { useTranslation } from 'react-i18next'
 import ItemsList from '../components/ItemsList'
 
@@ -15,6 +14,8 @@ function HomePage() {
     { id: 8, title: 'item3', collaction: 'collaction3', author: 'author3' },
     { id: 9, title: 'item4', collaction: 'collaction4', author: 'author4' },
     { id: 10, title: 'item5', collaction: 'collaction5', author: 'author5' },
+    { id: 11, title: 'item4', collaction: 'collaction4', author: 'author4' },
+    { id: 12, title: 'item5', collaction: 'collaction5', author: 'author5' },
   ]
   const collectionData = [
     { id: 1, title: 'collection1' },
@@ -26,20 +27,20 @@ function HomePage() {
   // const tags = ['banana', 'apple', 'orange', 'pear']
 
   return (
-    <Container>
-      <div className="mt-5">
+    <>
+      <div className="mb-5">
         <h3 className="mb-3">{t('home.last_added_items')}</h3>
-        <ItemsList data={data} type="item" />
+        <ItemsList data={data} type='item' />
       </div>
-      <div className="mt-5">
+      <div className="mb-5">
         <h3 className="mb-3">{t('home.5_biggest_collections')}</h3>
-        <ItemsList data={collectionData} type="collection" />
+        <ItemsList data={collectionData} type='collection'/>
       </div>
-      <div className="mt-5">
+      <div className="mb-5">
         <h3 className="mb-3">{t('home.teg_cloud')}</h3>
         tegs
       </div>
-    </Container>
+    </>
   )
 }
 
