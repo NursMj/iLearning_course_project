@@ -1,4 +1,9 @@
 {
+  "modal": {
+    "collaction": {
+      "title": "Add new collection"
+    }
+  },
   "header": {
     "title": "Collections",
     "search_placeholder": "Search...",

@@ -4,19 +4,21 @@ import TextField from '@mui/material/TextField'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import MenuItem from '@mui/material/MenuItem'
-import DialogTitle from '@mui/material/DialogTitle'
 import { useTranslation } from 'react-i18next'
 import topics from '../consts/topics'
 import { Grid, Typography } from '@mui/material'
 import ImageUploader from './ImageUploder'
+import DynamicInputFields from './DynamicInputField'
 
 function AddCollectionForm({ handleClose }: any) {
   const { t } = useTranslation()
 
   return (
     <>
-      <DialogTitle>{t('modal.collection_title')}</DialogTitle>
       <DialogContent sx={{ mt: 3 }}>
+        <Typography variant="h5" sx={{ textAlign: 'center', mb: 3 }}>
+          {t('modal.collaction.title')}
+        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -60,145 +62,28 @@ function AddCollectionForm({ handleClose }: any) {
             <ImageUploader />
           </Grid>
         </Grid>
-        <Typography sx={{ textAlign: 'center', marginTop: '20px' }}>
+        <Typography variant="h6" sx={{ textAlign: 'center', margin: '20px 0' }}>
           Collection item fields
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
+          <Grid item xs={12}>
+            <DynamicInputFields type="Integer" />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
+          <Grid item xs={12}>
+            <DynamicInputFields type="String" />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
+          <Grid item xs={12}>
+            <DynamicInputFields type="Multiline" />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
+          <Grid item xs={12}>
+            <DynamicInputFields type="Boolean" />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              margin="dense"
-              id="collection-name"
-              label="Collection name"
-              variant="outlined"
-            />
+          <Grid item xs={12}>
+            <DynamicInputFields type="Date" />
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ p: 3 }}>
         <Button variant="contained" onClick={handleClose}>
           Add collection
         </Button>
