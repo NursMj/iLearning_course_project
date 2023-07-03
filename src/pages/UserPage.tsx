@@ -19,12 +19,16 @@ function UserPage() {
   //   <span>From user page</span>
   // )
 
+  function setShowModal() {
+    
+  }
+
   return (
     <>
       <Typography variant="h4" className="mb-3">
         {t('user.title')}
       </Typography>
-      <Toolbar />
+      <Toolbar props={{ setShowModal }} />
       <ItemsList data={collectionData} type="collection" />
       {/* <MyModalDialog /> */}
     </>

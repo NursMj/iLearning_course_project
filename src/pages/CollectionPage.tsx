@@ -1,8 +1,22 @@
 import { useParams } from 'react-router-dom'
 import ItemsList from '../components/ItemsList'
 import Toolbar from '../components/ToolBar'
+import MyModalDialog from '../components/MyModalDialog'
+import { useState } from 'react'
+import AddCollectionForm from '../components/AddCollectionForm'
+// import Button from '@mui/material/Button'
+// import TextField from '@mui/material/TextField'
+// import DialogActions from '@mui/material/DialogActions'
+// import DialogContent from '@mui/material/DialogContent'
+// import MenuItem from '@mui/material/MenuItem'
+// import DialogTitle from '@mui/material/DialogTitle'
+// import { useTranslation } from 'react-i18next'
+// import topics from '../consts/topics'
+// import { Grid, Typography } from '@mui/material'
 
 function CollectionPage() {
+  // const { t } = useTranslation()
+  const [showModal, setShowModal] = useState(false)
   const id = useParams().id
   const data = [
     { id: 1, title: 'item1', collaction: 'collaction1', author: 'author1' },
@@ -19,11 +33,16 @@ function CollectionPage() {
     { id: 12, title: 'item5', collaction: 'collaction5', author: 'author5' },
   ]
 
+  const handleClose = () => setShowModal(false)
+
+  const modalContent = <AddCollectionForm handleClose={handleClose} />
+
   return (
     <>
-      #{id} CollectionPage 
-      <Toolbar />
+      #{id} CollectionPage
+      <Toolbar props={{ setShowModal }} />
       <ItemsList data={data} type="item" />
+      <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )
 }
