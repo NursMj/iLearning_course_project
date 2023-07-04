@@ -1,9 +1,10 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import { Typography } from '@mui/material'
 import ItemsList from '../components/ItemsList'
 import Toolbar from '../components/ToolBar'
 import { useTranslation } from 'react-i18next'
-// import MyModalDialog from '../components/MyModalDialog'
+import AddCollectionForm from '../components/AddCollectionForm'
+import MyModalDialog from '../components/MyModalDialog'
 
 function UserPage() {
   const { t } = useTranslation()
@@ -14,14 +15,11 @@ function UserPage() {
     { id: 4, title: 'collection4' },
     { id: 5, title: 'collection5' },
   ]
+  const [showModal, setShowModal] = useState(false)
 
-  // const modalContent = (
-  //   <span>From user page</span>
-  // )
+  const handleClose = () => setShowModal(false)
 
-  function setShowModal() {
-    
-  }
+  const modalContent = <AddCollectionForm handleClose={handleClose} />
 
   return (
     <>
@@ -30,7 +28,7 @@ function UserPage() {
       </Typography>
       <Toolbar props={{ setShowModal }} />
       <ItemsList data={collectionData} type="collection" />
-      {/* <MyModalDialog /> */}
+      <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )
 }

@@ -84,6 +84,9 @@ function AddCollectionForm({ handleClose }: any) {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
+        <Button onClick={handleClose}>
+          Сancel
+        </Button>
         <Button variant="contained" onClick={handleClose}>
           Add collection
         </Button>
