@@ -12,13 +12,13 @@ const ImageUploader: React.FC = () => {
   return (
     <div
       {...getRootProps()}
-      style={{ border: '1px dashed gray', padding: '1rem' }}
+      style={{ border: isDragActive ? '1px dashed #007bff'  :'1px dashed gray', padding: '2rem' }}
     >
       <input {...getInputProps()} accept="image/*" />
       {isDragActive ? (
-        <p>Drop the files here...</p>
+        <p style={{color: '#007bff'}}>Drop the files here...</p>
       ) : (
-        <p>Drag and drop an image or click to browse</p>
+        <p>Drag and drop an image or click to browse (optional)</p>
       )}
     </div>
   )

@@ -1,4 +1,6 @@
 import darkModeReducer from './darkModeReducer'
+import userReducer from './userReducer'
+import topicsReducer from './topicsReducer'
 import { configureStore } from '@reduxjs/toolkit'
 import {
   persistStore,
@@ -18,11 +20,13 @@ const persistConfig = {
   storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, darkModeReducer)
+const persistedDarkModeReducer = persistReducer(persistConfig, darkModeReducer)
 
 export const store = configureStore({
   reducer: {
-    darkMode: persistedReducer,
+    darkMode: persistedDarkModeReducer,
+    user: userReducer,
+    topics: topicsReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,16 +1,16 @@
-// import { useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import MenuItem from '@mui/material/MenuItem'
 import { useTranslation } from 'react-i18next'
-import topics from '../consts/topics'
 import { Grid, Typography } from '@mui/material'
 import ImageUploader from './ImageUploder'
 import DynamicInputFields from './DynamicInputField'
+import { useSelector } from 'react-redux'
 
 function AddCollectionForm({ handleClose }: any) {
+  const topics = useSelector((state: any) => state.topics.topics)
   const { t } = useTranslation()
 
   return (
@@ -39,26 +39,26 @@ function AddCollectionForm({ handleClose }: any) {
               margin="dense"
               select
               label="Topic"
-              defaultValue={topics[0]}
+              defaultValue={topics[0].title}
             >
-              {topics.map((t) => (
-                <MenuItem key={t} value={t}>
-                  {t}
+              {topics.map((t: any) => (
+                <MenuItem key={t.id} value={t.title}>
+                  {t.title}
                 </MenuItem>
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               id="collection-description"
               required
               label="Multiline"
               multiline
               fullWidth
-              rows={3}
+              rows={2}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <ImageUploader />
           </Grid>
         </Grid>

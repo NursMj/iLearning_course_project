@@ -74,7 +74,8 @@ export default function Header() {
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const isAdmin = false
-  const [isAuth, setIsAuth] = React.useState(true)
+  const user = useSelector((state: any) => state.user)
+
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -94,7 +95,7 @@ export default function Header() {
   }
 
   function handleLogout() {
-    setIsAuth(false)
+    // setIsAuth(false)
   }
 
   const menuId = 'account-menu'
@@ -134,7 +135,7 @@ export default function Header() {
               onChange={() => dispatch(setUnsetDarkMode())}
             />
             <LanguageSelect />
-            {isAuth ? (
+            {user.isAuth ? (
               isAdmin ? (
                 <IconButton
                   size="large"
