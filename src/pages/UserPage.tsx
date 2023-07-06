@@ -3,8 +3,9 @@ import { Typography } from '@mui/material'
 import ItemsList from '../components/ItemsList'
 import Toolbar from '../components/ToolBar'
 import { useTranslation } from 'react-i18next'
-import AddCollectionForm from '../components/AddCollectionForm'
+import AddCollectionForm from '../components/Forms/AddCollectionForm'
 import MyModalDialog from '../components/MyModalDialog'
+import { useSelector } from 'react-redux'
 
 function UserPage() {
   const { t } = useTranslation()
@@ -16,6 +17,7 @@ function UserPage() {
     { id: 5, title: 'collection5' },
   ]
   const [showModal, setShowModal] = useState(false)
+  const user = useSelector((state: any) => state.user.user)
 
   const handleClose = () => setShowModal(false)
 
@@ -24,7 +26,7 @@ function UserPage() {
   return (
     <>
       <Typography variant="h4" className="mb-3">
-        {t('user.title')}
+        {t('user.title')}, {user.name}
       </Typography>
       <Toolbar props={{ setShowModal }} />
       <ItemsList data={collectionData} type="collection" />

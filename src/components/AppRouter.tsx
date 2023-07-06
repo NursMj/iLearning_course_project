@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 const AppRouter = () => {
   const user = useSelector((state: any) => state.user)
+  const isAdmin = user.user.role === 'ADMIN'
 
   return (
     <Routes>
@@ -13,7 +14,7 @@ const AppRouter = () => {
           return <Route key={path} path={path} element={<Component />} />
         })}
       {user.isAuth &&
-        user.isAdmin &&
+        isAdmin &&
         authAdminRoutes.map(({ path, Component }) => {
           return <Route key={path} path={path} element={<Component />} />
         })}

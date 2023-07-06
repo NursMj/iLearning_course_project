@@ -4,15 +4,15 @@ import { createSlice } from '@reduxjs/toolkit'
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    isAuth: true,
+    isAuth: false,
     user: {}
   },
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload.user
+      state.user = action.payload
     },
-    setIsAuth: (state) => {
-      state.isAuth = !state.isAuth
+    setIsAuth: (state, action) => {
+      state.isAuth = action.payload
     }
   },
 });

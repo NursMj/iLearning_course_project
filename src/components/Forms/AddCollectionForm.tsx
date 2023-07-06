@@ -5,8 +5,8 @@ import DialogContent from '@mui/material/DialogContent'
 import MenuItem from '@mui/material/MenuItem'
 import { useTranslation } from 'react-i18next'
 import { Grid, Typography } from '@mui/material'
-import ImageUploader from './ImageUploder'
-import DynamicInputFields from './DynamicInputField'
+import ImageUploader from '../ImageUploder'
+import DynamicInputFields from '../DynamicInputField'
 import { useSelector } from 'react-redux'
 
 function AddCollectionForm({ handleClose }: any) {
@@ -84,9 +84,7 @@ function AddCollectionForm({ handleClose }: any) {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
-        <Button onClick={handleClose}>
-          Сancel
-        </Button>
+        <Button onClick={handleClose}>Сancel</Button>
         <Button variant="contained" onClick={handleClose}>
           Add collection
         </Button>

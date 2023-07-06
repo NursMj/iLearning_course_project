@@ -10,6 +10,7 @@ const MobileMenu = (props: any) => {
     isMobileMenuOpen,
     handleMobileMenuClose,
     handleProfileMenuOpen,
+    // handleLogout
   } = props
   // const { t } = useTranslation()
 
@@ -136,6 +137,7 @@ const HeaderMenu = (props: any) => {
         isMobileMenuOpen={isMobileMenuOpen}
         handleMobileMenuClose={handleMobileMenuClose}
         handleProfileMenuOpen={handleProfileMenuOpen}
+        handleLogout={handleLogout}
       />
     </>
   )

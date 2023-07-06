@@ -20,6 +20,8 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import MyLink from '../common/MyLink'
 import HeaderMenu from './HeaderMenu'
+import { setIsAuth, setUser } from '../store/userReducer'
+import { toast } from 'react-toastify'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -73,9 +75,8 @@ export default function Header() {
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-  const isAdmin = false
   const user = useSelector((state: any) => state.user)
-
+  const isAdmin = user.user.role === 'ADMIN'
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -95,7 +96,12 @@ export default function Header() {
   }
 
   function handleLogout() {
-    // setIsAuth(false)
+    dispatch(setUser({}))
+    dispatch(setIsAuth(false))
+    localStorage.setItem('token', '')
+    toast.info('Loged out', {
+      autoClose: 1500,
+    })
   }
 
   const menuId = 'account-menu'
