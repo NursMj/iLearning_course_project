@@ -35,7 +35,6 @@ function AuthRegPage() {
           data = await registration(name, email, password)
           toast.success('Signup successful!')
         }
-        console.log(data)
         dispatch(setIsAuth(true))
         dispatch(setUser(data))
         navigate(HOME_ROUTE)

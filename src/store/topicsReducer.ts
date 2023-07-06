@@ -3,15 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 const topicSlice = createSlice({
   name: 'topics',
   initialState: {
-    topics: [
-      { id: 1, title: 'shoes' },
-      { id: 2, title: 'books' },
-      { id: 3, title: 'cups' },
-    ],
+    topics: [],
   },
   reducers: {
     setTopics: (state, action) => {
-      state.topics = action.payload.topics
+      state.topics = action.payload
     },
   },
 })
