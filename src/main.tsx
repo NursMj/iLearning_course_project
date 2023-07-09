@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <PersistGate loading={'Загрузка'} persistor={persistor}>
+    <PersistGate loading={'Loading'} persistor={persistor}>
       <App />
     </PersistGate>
   </Provider>

@@ -4,21 +4,95 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import MenuItem from '@mui/material/MenuItem'
 import { useTranslation } from 'react-i18next'
-import { Grid, Typography } from '@mui/material'
+import { Alert, Grid, Typography } from '@mui/material'
 import ImageUploader from '../ImageUploder'
 import DynamicInputFields from '../DynamicInputField'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { createCollection } from '../../http/collectionApi'
+import { toast } from 'react-toastify'
+import MySpinner from '../../common/MySpinner'
+import { refreshCollections } from '../../utils/refreshers'
+import getFields from '../../utils/getFields'
 
 function AddCollectionForm({ handleClose }: any) {
   const topics = useSelector((state: any) => state.topics.topics)
+  const userId = useSelector((state: any) => state.user.user.id)
   const { t } = useTranslation()
+  const [name, setName] = useState('')
+  const [desc, setDesc] = useState('')
+  const [selectedTopicId, setSelectedTopicId] = useState(topics[0].id)
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [fields, setFields] = useState({
+    integer: [],
+    string: [],
+    multiline: [],
+    boolean: [],
+    date: [],
+  })
+  const dispatch = useDispatch()
+  const types = ['integer', 'string', 'multiline', 'boolean', 'date']
+
+  function handleFieldsChange(newFields: string[], type: string): void {
+    setFields((prevState: any) => {
+      if (type === 'integer') return { ...prevState, integer: newFields }
+      if (type === 'string') return { ...prevState, string: newFields }
+      if (type === 'multiline')
+        return { ...prevState, multilineFields: newFields }
+      if (type === 'boolean') return { ...prevState, boolean: newFields }
+      if (type === 'date') return { ...prevState, date: newFields }
+    })
+  }
+
+  async function handleSubmit(e: any) {
+    e.preventDefault()
+    if (name && desc && selectedTopicId) {
+      setIsLoading(true)
+      setError('')
+      try {
+        const topicId = selectedTopicId.toString()
+        await createCollection({
+          name,
+          desc,
+          topicId,
+          userId,
+          itemFields: getFields(fields),
+        })
+        // console.log({
+        //   name,
+        //   desc,
+        //   topicId,
+        //   userId,
+        //   itemFields: getFields(fields),
+        // })
+        handleClose()
+        toast.success('Collection created successfully!', {
+          autoClose: 1500,
+        })
+        refreshCollections(dispatch)
+      } catch (e: any) {
+        if (e.response) {
+          setError(e.response.data.message)
+        } else {
+          setError(e.message)
+        }
+        console.log(e)
+      }
+      setIsLoading(false)
+    } else {
+      setError('Fill in required fields')
+    }
+  }
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <DialogContent sx={{ mt: 3 }}>
         <Typography variant="h5" sx={{ textAlign: 'center', mb: 3 }}>
-          {t('modal.collaction.title')}
+          {t('modal.collaction_form.title')}
         </Typography>
+        {error && <Alert severity="error">{error}</Alert>}
+        {isLoading && <MySpinner />}
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -29,6 +103,8 @@ function AddCollectionForm({ handleClose }: any) {
               id="collection-name"
               label="Collection name"
               variant="outlined"
+              value={name}
+              onChange={(e: any) => setName(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -39,11 +115,13 @@ function AddCollectionForm({ handleClose }: any) {
               margin="dense"
               select
               label="Topic"
-              defaultValue={topics[0].title}
+              defaultValue={topics[0].id}
+              value={selectedTopicId}
+              onChange={(e) => setSelectedTopicId(e.target.value)}
             >
               {topics.map((t: any) => (
-                <MenuItem key={t.id} value={t.title}>
-                  {t.title}
+                <MenuItem key={t.id} value={t.id}>
+                  {t.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -56,40 +134,33 @@ function AddCollectionForm({ handleClose }: any) {
               multiline
               fullWidth
               rows={2}
+              value={desc}
+              onChange={(e: any) => setDesc(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
             <ImageUploader />
           </Grid>
         </Grid>
+        <hr />
         <Typography variant="h6" sx={{ textAlign: 'center', margin: '20px 0' }}>
           Collection item fields
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <DynamicInputFields type="Integer" />
-          </Grid>
-          <Grid item xs={12}>
-            <DynamicInputFields type="String" />
-          </Grid>
-          <Grid item xs={12}>
-            <DynamicInputFields type="Multiline" />
-          </Grid>
-          <Grid item xs={12}>
-            <DynamicInputFields type="Boolean" />
-          </Grid>
-          <Grid item xs={12}>
-            <DynamicInputFields type="Date" />
-          </Grid>
+          {types.map((type) => (
+            <Grid item xs={12} key={type}>
+              <DynamicInputFields onChange={handleFieldsChange} type={type} />
+            </Grid>
+          ))}
         </Grid>
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
         <Button onClick={handleClose}>Сancel</Button>
-        <Button variant="contained" onClick={handleClose}>
+        <Button variant="contained" onClick={handleSubmit}>
           Add collection
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }
 

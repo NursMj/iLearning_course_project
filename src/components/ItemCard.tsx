@@ -29,7 +29,7 @@ function ItemCard(props: any) {
               onClick={handleCheck}
             />
             <Typography variant="h5" component="div">
-              {item.title}
+              {item.name}
             </Typography>
             {isItem && (
               <>

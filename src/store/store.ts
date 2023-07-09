@@ -1,5 +1,6 @@
 import darkModeReducer from './darkModeReducer'
 import userReducer from './userReducer'
+import collectionsReducer from './collectionsReducer'
 import topicsReducer from './topicsReducer'
 import { configureStore } from '@reduxjs/toolkit'
 import {
@@ -26,7 +27,8 @@ export const store = configureStore({
   reducer: {
     darkMode: persistedDarkModeReducer,
     user: userReducer,
-    topics: topicsReducer
+    topics: topicsReducer,
+    collections: collectionsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -2,25 +2,23 @@ import React, { useState } from 'react'
 import { TextField, Button, Grid, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-interface Field {
-  value: string
-}
-
-function DynamicInputFields({ type }: any) {
-  const [fields, setFields] = useState<Field[]>([{ value: '' }])
+function DynamicInputFields({ type, onChange }: any) {
+  const [fields, setFields] = useState<string[]>([])
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    index: number
+    index: number,
+    type: string
   ) => {
     const newFields = [...fields]
-    newFields[index].value = event.target.value
+    newFields[index] = event.target.value
     setFields(newFields)
+    onChange(newFields, type)
   }
 
   const handleAddField = () => {
     const newFields = [...fields]
-    newFields.push({ value: '' })
+    newFields.push('')
     setFields(newFields)
   }
 
@@ -32,7 +30,7 @@ function DynamicInputFields({ type }: any) {
 
   return (
     <div>
-      <Typography>{`${type} type fields (max 3 available)`}</Typography>
+      <Typography>{`${type.charAt(0).toUpperCase() + type.slice(1)} type fields (max 3 available)`}</Typography>
       {fields.map((field, index) => (
         <Grid spacing={2} container key={index}>
           <Grid item xs={12} sm={8}>
@@ -42,18 +40,25 @@ function DynamicInputFields({ type }: any) {
               id={`${type}-field${index}`}
               variant="outlined"
               label="Field name"
-              value={field.value}
-              onChange={(e: any) => handleChange(e, index)}
+              value={field}
+              onChange={(e: any) => handleChange(e, index, type)}
             />
           </Grid>
-          <Grid sx={{display: 'flex', alignItems: 'center'}} item xs={12} sm={2}>
+          <Grid
+            sx={{ display: 'flex', alignItems: 'center' }}
+            item
+            xs={12}
+            sm={2}
+          >
             <Button onClick={() => handleRemoveField(index)}>
               <DeleteIcon />
             </Button>
           </Grid>
         </Grid>
       ))}
-      {fields.length < 3 && <Button onClick={handleAddField}>Add {type} Field</Button>}
+      {fields.length < 3 && (
+        <Button onClick={handleAddField}>Add {type} Field</Button>
+      )}
     </div>
   )
 }

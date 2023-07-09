@@ -78,7 +78,7 @@ const DesktopMenu = (props: any) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {isAdmin ? (
+      {isAdmin && (
         <MyLink
           to="/admin"
           content={
@@ -87,21 +87,19 @@ const DesktopMenu = (props: any) => {
             </MenuItem>
           }
         />
-      ) : (
-        <MyLink
-          to="/user"
-          content={
-            <MenuItem onClick={handleMenuClose}>
-              {t('header.menu_item1')}
-            </MenuItem>
-          }
-        />
       )}
       <MyLink
-        to="/"
+        to="/user"
         content={
-          <MenuItem onClick={logout}>{t('header.menu_item2')}</MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            {t('header.menu_item1')}
+          </MenuItem>
         }
+      />
+
+      <MyLink
+        to="/"
+        content={<MenuItem onClick={logout}>{t('header.menu_item2')}</MenuItem>}
       />
     </Menu>
   )

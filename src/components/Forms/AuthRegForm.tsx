@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../../utils/consts'
 import { Alert } from '@mui/material'
-import { Spinner } from 'react-bootstrap'
+import MySpinner from '../../common/MySpinner'
 
 function AuthRegForm(props: any) {
   const {
@@ -40,9 +40,7 @@ function AuthRegForm(props: any) {
         }}
       >
         {isLoading && (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <MySpinner />
         )}
         {error && <Alert severity="warning">{error}</Alert>}
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

@@ -21,6 +21,10 @@ export const authAdminRoutes = [
     path: ADMIN_ROUTE,
     Component: AdminPage,
   },
+  {
+    path: USER_ROUTE,
+    Component: UserPage,
+  },
 ]
 
 export const authRoutes = [

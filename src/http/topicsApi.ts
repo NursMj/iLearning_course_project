@@ -1,7 +1,7 @@
 import { $authHost, $host } from './index'
 
 const createTopic = async (name: string) => {
-  const {data} = await $authHost.post('api/topic', name)
+  const {data} = await $authHost.post('api/topic', {name})
   return data
 }
 

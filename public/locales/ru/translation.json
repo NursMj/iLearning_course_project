@@ -1,16 +1,11 @@
 {
   "modal": {
-    "collaction": {
+    "collaction_form": {
       "title": "Добавить новую коллекцию"
+    },
+    "topic_form": {
+      "title": "Добавить новую тему"
     }
-  },
-  "header": {
-    "title": "Колекции",
-    "search_placeholder": "Поиск...",
-    "sign_in": "Войти",
-    "menu_item3": "Кабинет администратора",
-    "menu_item1": "Мои колекции",
-    "menu_item2": "Выйти"
   },
   "login_form": {
     "title_login": "ВОЙТИ",
@@ -27,6 +22,14 @@
     "name_placeholder": "Введите ваше имя",
     "email_placeholder": "Введите вашу почту",
     "password_placeholder": "Введите пароль"
+  },
+  "header": {
+    "title": "Колекции",
+    "search_placeholder": "Поиск...",
+    "sign_in": "Войти",
+    "menu_item3": "Кабинет администратора",
+    "menu_item1": "Мои колекции",
+    "menu_item2": "Выйти"
   },
   "home": {
     "last_added_items": "Последние айтемы",

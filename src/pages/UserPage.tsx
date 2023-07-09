@@ -1,27 +1,28 @@
 import { useState } from 'react'
-import { Typography } from '@mui/material'
+import { Typography, Alert } from '@mui/material'
 import ItemsList from '../components/ItemsList'
 import Toolbar from '../components/ToolBar'
 import { useTranslation } from 'react-i18next'
 import AddCollectionForm from '../components/Forms/AddCollectionForm'
-import MyModalDialog from '../components/MyModalDialog'
+import MyModalDialog from '../common/MyModalDialog'
+import MySpinner from '../common/MySpinner'
 import { useSelector } from 'react-redux'
 
 function UserPage() {
   const { t } = useTranslation()
-  const collectionData = [
-    { id: 1, title: 'collection1' },
-    { id: 2, title: 'collection2' },
-    { id: 3, title: 'collection3' },
-    { id: 4, title: 'collection4' },
-    { id: 5, title: 'collection5' },
-  ]
   const [showModal, setShowModal] = useState(false)
   const user = useSelector((state: any) => state.user.user)
+  const collections = useSelector((state: any) => state.collections.collections)
+  const loading = useSelector((state: any) => state.collections.loading)
+  const error = useSelector((state: any) => state.collections.error)
 
   const handleClose = () => setShowModal(false)
 
-  const modalContent = <AddCollectionForm handleClose={handleClose} />
+  const modalContent = (
+    <AddCollectionForm
+      handleClose={handleClose}
+    />
+  )
 
   return (
     <>
@@ -29,7 +30,9 @@ function UserPage() {
         {t('user.title')}, {user.name}
       </Typography>
       <Toolbar props={{ setShowModal }} />
-      <ItemsList data={collectionData} type="collection" />
+      {error && <Alert>{error}</Alert>}
+      {loading && <MySpinner />}
+      {!loading && <ItemsList data={collections} type="collection" />}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )

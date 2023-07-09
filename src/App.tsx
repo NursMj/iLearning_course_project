@@ -9,12 +9,12 @@ import AppRouter from './components/AppRouter'
 import { check } from './http/userApi'
 import { useDispatch } from 'react-redux'
 import { setIsAuth, setUser } from './store/userReducer'
-import { Spinner } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import MySpinner from './common/MySpinner'
+import { refreshCollections, refreshTopics } from './utils/refreshers'
 
 function App() {
-
   return (
     <BrowserRouter>
       <Header />
@@ -46,14 +46,14 @@ export default function WrappedApp() {
         dispatch(setIsAuth(true))
       })
       .finally(() => setIsLoading(false))
+    refreshTopics(dispatch)
+    refreshCollections(dispatch)
   }, [])
 
   if (isLoading) {
     return (
       <div className="mt-5 d-flex justify-content-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <MySpinner />
       </div>
     )
   }

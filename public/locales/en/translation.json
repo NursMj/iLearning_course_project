@@ -1,16 +1,11 @@
 {
   "modal": {
-    "collaction": {
+    "collaction_form": {
       "title": "Add new collection"
+    },
+    "topic_form": {
+      "title": "Add new topic"
     }
-  },
-  "header": {
-    "title": "Collections",
-    "search_placeholder": "Search...",
-    "sign_in": "Sign in",
-    "menu_item3": "Admin page",
-    "menu_item1": "My collections",
-    "menu_item2": "Log out"
   },
   "login_form": {
     "title_login": "SIGN IN",
@@ -27,6 +22,14 @@
     "name_placeholder": "Enter your name",
     "email_placeholder": "Enter email address",
     "password_placeholder": "Enter password"
+  },
+  "header": {
+    "title": "Collections",
+    "search_placeholder": "Search...",
+    "sign_in": "Sign in",
+    "menu_item3": "Admin page",
+    "menu_item1": "My collections",
+    "menu_item2": "Log out"
   },
   "home": {
     "last_added_items": "Last added items",
