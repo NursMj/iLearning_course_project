@@ -21,6 +21,16 @@ export const fetchItems = async () => {
   return data
 }
 
+export const fetchCollectionItems = async (id: number) => {
+  const { data } = await $host.get('api/item', {
+    params: {
+      collectionId: id,
+    },
+  })
+  console.log(data)
+  return data
+}
+
 export const fetchOneItem = async (id: number) => {
   const { data } = await $host.get(`api/item/${id}`)
   return data

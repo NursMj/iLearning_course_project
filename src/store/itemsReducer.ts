@@ -1,16 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchItems, fetchOneItem } from '../http/itemApi'
+import { fetchCollectionItems, fetchOneItem } from '../http/itemApi'
 
-export const fetchAllItems = createAsyncThunk('items/fetchAllItems', async () => {
-  const data = await fetchItems()
-  return data
-})
+export const getCollectionItems = createAsyncThunk(
+  'items/getCollectionItems',
+  async (id: number) => {
+    const data = await fetchCollectionItems(id)
+    return data
+  }
+)
 
 export const fetchCurrentItem = createAsyncThunk(
   'items/fetchCurrentItem',
   async (id: number) => {
     const data = await fetchOneItem(id)
-    return (data)
+    return data
   }
 )
 
@@ -26,16 +29,16 @@ const itemsSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllItems.pending, (state) => {
+    builder.addCase(getCollectionItems.pending, (state) => {
       state.loading = true
     })
 
-    builder.addCase(fetchAllItems.fulfilled, (state, action) => {
+    builder.addCase(getCollectionItems.fulfilled, (state, action) => {
       state.loading = false
       state.items = action.payload.rows
     })
 
-    builder.addCase(fetchAllItems.rejected, (state, action) => {
+    builder.addCase(getCollectionItems.rejected, (state, action) => {
       state.loading = false
       state.error = action.error.message
     })

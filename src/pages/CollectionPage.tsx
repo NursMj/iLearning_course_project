@@ -15,6 +15,7 @@ function CollectionPage() {
   const id = Number(useParams().id)
   const items = useSelector((state: any) => state.items.items)
   const itemsLoading = useSelector((state: any) => state.items.loading)
+  // const itemsError = useSelector((state: any) => state.items.error)
   const dispatch = useDispatch()
   const collection = useSelector(
     (state: any) => state.collections.currentCollection
@@ -25,7 +26,7 @@ function CollectionPage() {
 
   useEffect(() => {
     refreshCurrentCollection(dispatch, id)
-    refreshItems(dispatch)
+    refreshItems(dispatch, id)
   }, [])
 
   const handleClose = () => setShowModal(false)

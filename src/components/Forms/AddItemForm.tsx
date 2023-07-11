@@ -6,12 +6,13 @@ import DialogContent from '@mui/material/DialogContent'
 import { Alert, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import extractItemFields from '../../utils/extractItemFields'
 import generateFieldValues from '../../utils/generateFieldValues'
 import getValueFromFieldName from '../../utils/getValueFromFieldName'
 import { createItem } from '../../http/itemApi'
 import MySpinner from '../../common/MySpinner'
+import { refreshItems } from '../../utils/refreshers'
 
 function AddItemForm({ handleClose }: any) {
   // const { t } = useTranslation()
@@ -25,6 +26,7 @@ function AddItemForm({ handleClose }: any) {
   const [fieldValues, setFieldValues] = useState(generatedFieldValues)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -46,7 +48,7 @@ function AddItemForm({ handleClose }: any) {
       toast.success('Item created successfully!', {
         autoClose: 1500,
       })
-      // refreshCollections(dispatch)
+      refreshItems(dispatch, collectionId)
     } catch (e: any) {
       if (e.response) {
         setError(e.response.data.message)

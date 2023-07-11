@@ -18,6 +18,7 @@ const fetchCollections = async () => {
 
 const fetchOneCollection = async (id: number) => {
   const { data } = await $host.get(`api/collection/${id}`)
+  console.log(data)
   return data
 }
 
