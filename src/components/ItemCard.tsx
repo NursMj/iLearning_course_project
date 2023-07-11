@@ -11,6 +11,7 @@ function ItemCard(props: any) {
 
   function handleCheck(e: any) {
     e.stopPropagation()
+    
   }
 
   return (
@@ -29,7 +30,7 @@ function ItemCard(props: any) {
               onClick={handleCheck}
             />
             <Typography variant="h5" component="div">
-              {item.name}
+              {item.requiredField1_value || item.name}
             </Typography>
             {isItem && (
               <>

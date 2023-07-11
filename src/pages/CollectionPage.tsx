@@ -5,20 +5,16 @@ import MyModalDialog from '../common/MyModalDialog'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@mui/material'
-import { fetchCurrent } from '../store/collectionsReducer'
 import MySpinner from '../common/MySpinner'
 import AddItemForm from '../components/Forms/AddItemForm'
+import { refreshCurrentCollection, refreshItems } from '../utils/refreshers'
 
 function CollectionPage() {
   // const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
   const id = Number(useParams().id)
-  const data = [
-    { id: 1, title: 'item1', collaction: 'collaction1', author: 'author1' },
-    { id: 2, title: 'item2', collaction: 'collaction2', author: 'author2' },
-    { id: 3, title: 'item3', collaction: 'collaction3', author: 'author3' },
-    { id: 4, title: 'item4', collaction: 'collaction4', author: 'author4' },
-  ]
+  const items = useSelector((state: any) => state.items.items)
+  const itemsLoading = useSelector((state: any) => state.items.loading)
   const dispatch = useDispatch()
   const collection = useSelector(
     (state: any) => state.collections.currentCollection
@@ -28,8 +24,9 @@ function CollectionPage() {
   )
 
   useEffect(() => {
-    dispatch(fetchCurrent(id) as any)
-  }, [dispatch])
+    refreshCurrentCollection(dispatch, id)
+    refreshItems(dispatch)
+  }, [])
 
   const handleClose = () => setShowModal(false)
 
@@ -41,9 +38,9 @@ function CollectionPage() {
     <>
       <Typography variant="h5">Collection '{collection.name}'</Typography>
       <p>{collection.desc}</p>
-      <p>Topic: {collection.topic}</p>
+      <p>Topic: {collection?.Topic?.name}</p>
       <Toolbar props={{ setShowModal }} />
-      <ItemsList data={data} type="item" />
+      {itemsLoading ? <MySpinner /> : <ItemsList data={items} type="item" />}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )

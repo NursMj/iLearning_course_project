@@ -10,8 +10,7 @@ export const fetchCurrent = createAsyncThunk(
   'collections/fetchCurrent',
   async (id: number) => {
     const data = await fetchOneCollection(id)
-    
-    return {...data.collection, topic: data.topic.name}
+    return (data)
   }
 )
 

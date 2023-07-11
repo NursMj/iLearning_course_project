@@ -59,13 +59,6 @@ function AddCollectionForm({ handleClose }: any) {
           userId,
           itemFields: getFields(fields),
         })
-        // console.log({
-        //   name,
-        //   desc,
-        //   topicId,
-        //   userId,
-        //   itemFields: getFields(fields),
-        // })
         handleClose()
         toast.success('Collection created successfully!', {
           autoClose: 1500,
@@ -156,7 +149,7 @@ function AddCollectionForm({ handleClose }: any) {
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
         <Button onClick={handleClose}>Сancel</Button>
-        <Button variant="contained" onClick={handleSubmit}>
+        <Button type="submit" variant="contained" onClick={handleSubmit}>
           Add collection
         </Button>
       </DialogActions>

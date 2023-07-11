@@ -51,24 +51,7 @@ function AuthRegPage() {
       setError('Fill in required fields')
     }
   }
-  //   e.preventDefault()
-  //   // if (password && name) {
-  //   // setError('')
-  //   // setIsLoading(true)
-  //   try {
-  //     const data = await registration(name, email, password)
-  //   } catch (error) {
-  //     // setError('Sorry but something went wrong on the server side, please try again later')
-  //     console.log(error)
-  //   }
-  //   // setIsLoading(false)
-  //   // } else {
-  //   //   // setError('Please enter a valid email and fill all fields')
-  //   // }
-  // }
-
-  // const handleSubmit = isLogin ? handleLogin : handleRegistration
-
+  
   return (
     <Container component="main" maxWidth="xs">
       <AuthRegForm

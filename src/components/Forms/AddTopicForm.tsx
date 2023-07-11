@@ -61,7 +61,7 @@ function AddTopicForm({ handleClose }: any) {
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
         <Button onClick={handleClose}>Сancel</Button>
-        <Button variant="contained" onClick={handleSubmit}>
+        <Button type="submit" variant="contained" onClick={handleSubmit}>
           Add Topic
         </Button>
       </DialogActions>

@@ -8,7 +8,6 @@ const createCollection = async ({ name, desc, topicId, userId, itemFields }: any
     userId,
     itemFields
   })
-  console.log(data)
   return data
 }
 
