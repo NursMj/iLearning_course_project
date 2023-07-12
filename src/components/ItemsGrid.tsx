@@ -1,6 +1,6 @@
 import ItemCard from './ItemCard'
 
-function ItemsList(props: any) {
+function ItemsGrid(props: any) {
   const { data, type } = props
 
   return (
@@ -12,4 +12,4 @@ function ItemsList(props: any) {
   )
 }
 
-export default ItemsList
+export default ItemsGrid

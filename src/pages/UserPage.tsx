@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Typography, Alert } from '@mui/material'
-import ItemsList from '../components/ItemsList'
+import ItemsList from '../components/ItemsGrid'
 import Toolbar from '../components/ToolBar'
 import { useTranslation } from 'react-i18next'
 import AddCollectionForm from '../components/Forms/AddCollectionForm'
@@ -18,16 +18,12 @@ function UserPage() {
 
   const handleClose = () => setShowModal(false)
 
-  const modalContent = (
-    <AddCollectionForm
-      handleClose={handleClose}
-    />
-  )
+  const modalContent = <AddCollectionForm handleClose={handleClose} />
 
   return (
     <>
       <Typography variant="h4" className="mb-3">
-        {t('user.title')}, {user.name}
+        {t('user.title')} {user.name}
       </Typography>
       <Toolbar props={{ setShowModal }} />
       {error && <Alert>{error}</Alert>}

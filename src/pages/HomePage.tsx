@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import ItemsList from '../components/ItemsList'
+import ItemsList from '../components/ItemsGrid'
 import { Button } from 'react-bootstrap'
 import MySpinner from '../common/MySpinner'
 import { useSelector } from 'react-redux'

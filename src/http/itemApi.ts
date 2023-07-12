@@ -12,7 +12,6 @@ export const createItem = async ({
     collectionId,
     userId,
   })
-  console.log(data)
   return data
 }
 
@@ -27,7 +26,6 @@ export const fetchCollectionItems = async (id: number) => {
       collectionId: id,
     },
   })
-  console.log(data)
   return data
 }
 

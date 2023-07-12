@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import ItemsList from '../components/ItemsList'
+import ItemsList from '../components/ItemsGrid'
 import Toolbar from '../components/ToolBar'
 import MyModalDialog from '../common/MyModalDialog'
 import { useEffect, useState } from 'react'
