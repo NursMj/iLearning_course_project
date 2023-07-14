@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 // import { useTranslation } from 'react-i18next'
 import { Alert, Grid, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import extractItemFields from '../../utils/extractItemFields'
@@ -12,16 +12,16 @@ import generateFieldValues from '../../utils/generateFieldValues'
 import getValueFromFieldName from '../../utils/getValueFromFieldName'
 import { createItem } from '../../http/itemApi'
 import MySpinner from '../../common/MySpinner'
-import { refreshItems } from '../../utils/refreshers'
+import { getCollectionItems } from '../../store/itemsReducer'
 
 function AddItemForm({ handleClose }: any) {
   // const { t } = useTranslation()
   const collection = useSelector(
-    (state: any) => state.collections.currentCollection
+    (state: any) => state.collections.currentCollection.data
   )
   const collectionId = collection.id
   const userId = collection.UserId
-  const fieldNames = extractItemFields(collection)
+  const fieldNames: any = extractItemFields(collection)
   const generatedFieldValues = generateFieldValues(fieldNames)
   const [fieldValues, setFieldValues] = useState(generatedFieldValues)
   const [error, setError] = useState('')
@@ -48,7 +48,7 @@ function AddItemForm({ handleClose }: any) {
       toast.success('Item created successfully!', {
         autoClose: 1500,
       })
-      refreshItems(dispatch, collectionId)
+      dispatch(getCollectionItems(collectionId) as any)
     } catch (e: any) {
       if (e.response) {
         setError(e.response.data.message)
@@ -59,10 +59,6 @@ function AddItemForm({ handleClose }: any) {
     }
     setIsLoading(false)
   }
-
-  useEffect(() => {
-    console.log(collection)
-  }, [])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -79,7 +75,7 @@ function AddItemForm({ handleClose }: any) {
               <Grid item xs={12} key={key}>
                 <TextField
                   required
-                  autoFocus
+                  autoFocus={value === 'Name'}
                   fullWidth
                   margin="dense"
                   id={key}

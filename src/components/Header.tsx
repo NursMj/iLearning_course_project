@@ -141,6 +141,7 @@ export default function Header() {
               onChange={() => dispatch(setUnsetDarkMode())}
             />
             <LanguageSelect />
+            <Typography>{user.user.name}</Typography>
             {user.isAuth ? (
               isAdmin ? (
                 <IconButton

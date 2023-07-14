@@ -12,7 +12,6 @@ import { setIsAuth, setUser } from './store/userReducer'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import MySpinner from './common/MySpinner'
-import { refreshCollections, refreshTopics } from './utils/refreshers'
 
 function App() {
   return (
@@ -46,8 +45,6 @@ export default function WrappedApp() {
         dispatch(setIsAuth(true))
       })
       .finally(() => setIsLoading(false))
-    refreshTopics(dispatch)
-    refreshCollections(dispatch)
   }, [])
 
   if (isLoading) {

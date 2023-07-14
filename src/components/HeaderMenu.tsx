@@ -2,6 +2,7 @@ import { Menu, MenuItem, IconButton } from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { useTranslation } from 'react-i18next'
 import MyLink from '../common/MyLink'
+import { useSelector } from 'react-redux'
 
 const MobileMenu = (props: any) => {
   const {
@@ -10,7 +11,8 @@ const MobileMenu = (props: any) => {
     isMobileMenuOpen,
     handleMobileMenuClose,
     handleProfileMenuOpen,
-    // handleLogout
+    // handleLogout,
+    // user
   } = props
   // const { t } = useTranslation()
 
@@ -54,6 +56,7 @@ const DesktopMenu = (props: any) => {
     handleMenuClose,
     isAdmin,
     handleLogout,
+    user
   } = props
   const { t } = useTranslation()
 
@@ -89,7 +92,7 @@ const DesktopMenu = (props: any) => {
         />
       )}
       <MyLink
-        to="/user"
+        to={`/user/${user.id}`}
         content={
           <MenuItem onClick={handleMenuClose}>
             {t('header.menu_item1')}
@@ -119,6 +122,8 @@ const HeaderMenu = (props: any) => {
     isAdmin,
     handleLogout,
   } = props.props
+  const user = useSelector((state: any) => state.user.user)
+
   return (
     <>
       <DesktopMenu
@@ -128,6 +133,7 @@ const HeaderMenu = (props: any) => {
         handleMenuClose={handleMenuClose}
         isAdmin={isAdmin}
         handleLogout={handleLogout}
+        user={user}
       />
       <MobileMenu
         mobileMenuId={mobileMenuId}
@@ -136,6 +142,7 @@ const HeaderMenu = (props: any) => {
         handleMobileMenuClose={handleMobileMenuClose}
         handleProfileMenuOpen={handleProfileMenuOpen}
         handleLogout={handleLogout}
+        user={user}
       />
     </>
   )

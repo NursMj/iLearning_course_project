@@ -7,26 +7,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@mui/material'
 import MySpinner from '../common/MySpinner'
 import AddItemForm from '../components/Forms/AddItemForm'
-import { refreshCurrentCollection, refreshItems } from '../utils/refreshers'
+import checkIsOwner from '../utils/checkIsOwner'
+import { getCurrentCollection } from '../store/collectionsReducer'
+import { getCollectionItems } from '../store/itemsReducer'
 
 function CollectionPage() {
   // const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
-  const id = Number(useParams().id)
+  const collectionId = Number(useParams().id)
+  const user = useSelector((state: any) => state.user.user)
   const items = useSelector((state: any) => state.items.items)
   const itemsLoading = useSelector((state: any) => state.items.loading)
-  // const itemsError = useSelector((state: any) => state.items.error)
   const dispatch = useDispatch()
   const collection = useSelector(
-    (state: any) => state.collections.currentCollection
+    (state: any) => state.collections.currentCollection.data
   )
   const isLoading = useSelector(
-    (state: any) => state.collections.currentIsLoading
+    (state: any) => state.collections.currentCollection.isLoading
   )
+  const isOwner = checkIsOwner(user, collection.UserId)
 
   useEffect(() => {
-    refreshCurrentCollection(dispatch, id)
-    refreshItems(dispatch, id)
+    dispatch(getCurrentCollection(collectionId) as any)
+    dispatch(getCollectionItems(collectionId) as any)
   }, [])
 
   const handleClose = () => setShowModal(false)
@@ -38,9 +41,9 @@ function CollectionPage() {
   return (
     <>
       <Typography variant="h5">Collection '{collection.name}'</Typography>
-      <p>{collection.desc}</p>
       <p>Topic: {collection?.Topic?.name}</p>
-      <Toolbar props={{ setShowModal }} />
+      <p>Description: {collection.desc}</p>
+      <Toolbar props={{ setShowModal, isOwner }} />
       {itemsLoading ? <MySpinner /> : <ItemsList data={items} type="item" />}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>

@@ -7,8 +7,8 @@ import { Alert, Grid, Typography } from '@mui/material'
 import { useState } from 'react'
 import { createTopic } from '../../http/topicsApi'
 import { toast } from 'react-toastify'
-import { refreshTopics } from '../../utils/refreshers'
 import { useDispatch } from 'react-redux'
+import { getTopics } from '../../store/topicsReducer'
 
 function AddTopicForm({ handleClose }: any) {
   const { t } = useTranslation()
@@ -23,7 +23,7 @@ function AddTopicForm({ handleClose }: any) {
       await createTopic(name)
       setError('')
       handleClose()
-      refreshTopics(dispatch)
+      dispatch(getTopics() as any)
       toast.success('Topic created successfully!', {
         autoClose: 1500,
       })

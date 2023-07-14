@@ -14,7 +14,11 @@ import {
   USER_ROUTE,
   ITEM_ROUTE,
   SEARCH_ROUTE,
+  TOPICS_ROUTE,
+  ALL_USERS_ROUTE,
 } from './utils/consts'
+import TopicsPage from './pages/TopicsPage'
+import AllUsersPage from './pages/AllUsersPage'
 
 export const authAdminRoutes = [
   {
@@ -22,14 +26,22 @@ export const authAdminRoutes = [
     Component: AdminPage,
   },
   {
-    path: USER_ROUTE,
+    path: USER_ROUTE + '/:id',
     Component: UserPage,
+  },
+  {
+    path: TOPICS_ROUTE,
+    Component: TopicsPage,
+  },
+  {
+    path: ALL_USERS_ROUTE,
+    Component: AllUsersPage,
   },
 ]
 
 export const authRoutes = [
   {
-    path: USER_ROUTE,
+    path: USER_ROUTE + '/:id',
     Component: UserPage,
   },
 ]

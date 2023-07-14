@@ -1,4 +1,6 @@
 export const ADMIN_ROUTE = '/admin'
+export const TOPICS_ROUTE = '/topics'
+export const ALL_USERS_ROUTE = '/all-users'
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'
 export const HOME_ROUTE = '/'

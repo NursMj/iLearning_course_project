@@ -2,38 +2,45 @@ import { useTranslation } from 'react-i18next'
 import ItemsList from '../components/ItemsGrid'
 import { Button } from 'react-bootstrap'
 import MySpinner from '../common/MySpinner'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getLatestItems } from '../store/itemsReducer'
+import { getLargestCollections } from '../store/collectionsReducer'
 
 function HomePage() {
   const { t } = useTranslation()
-  const items = [
-    { id: 1, name: 'item1', collaction: 'collaction1', author: 'author1' },
-    { id: 2, name: 'item2', collaction: 'collaction2', author: 'author2' },
-    { id: 3, name: 'item3', collaction: 'collaction3', author: 'author3' },
-    { id: 4, name: 'item4', collaction: 'collaction4', author: 'author4' },
-    { id: 5, name: 'item5', collaction: 'collaction5', author: 'author5' },
-    { id: 6, name: 'item1', collaction: 'collaction1', author: 'author1' },
-    { id: 7, name: 'item2', collaction: 'collaction2', author: 'author2' },
-    { id: 8, name: 'item3', collaction: 'collaction3', author: 'author3' },
-  ]
+  const latestItems = useSelector((state: any) => state.items.latestItems)
+  const latestIsLoading = useSelector(
+    (state: any) => state.items.latestIsLoading
+  )
   // const dispatch = useDispatch()
-  const collections = useSelector((state: any) => state.collections.collections)
+  const largestCollections = useSelector((state: any) => state.collections.largestCollections.data)
   const loading = useSelector((state: any) => state.collections.loading)
   // const error = useSelector((state: any) => state.collections.error)
   const tegs = ['banana', 'apple', 'orange', 'pear']
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getLatestItems() as any)
+    dispatch(getLargestCollections() as any)
+  }, [])
 
   return (
     <>
       <div className="mb-5">
         <h3 className="mb-3">{t('home.last_added_items')}</h3>
-        <ItemsList data={items} type="item" />
+        {latestIsLoading ? (
+          <MySpinner />
+        ) : (
+          <ItemsList data={latestItems} type="item" />
+        )}
       </div>
       <div className="mb-5">
         <h3 className="mb-3">{t('home.5_biggest_collections')}</h3>
         {loading ? (
           <MySpinner />
         ) : (
-          <ItemsList data={collections} type="collection" />
+          <ItemsList data={largestCollections} type="collection" />
         )}
       </div>
       <div className="mb-5">

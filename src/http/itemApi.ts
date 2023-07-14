@@ -26,6 +26,7 @@ export const fetchCollectionItems = async (id: number) => {
       collectionId: id,
     },
   })
+  console.log(data)
   return data
 }
 
@@ -34,7 +35,14 @@ export const fetchOneItem = async (id: number) => {
   return data
 }
 
-export const deleteItem = async (id: number) => {
-  const { data } = await $authHost.delete(`api/item/${id}`)
+export const fetchLatestItems = async () => {
+  const { data } = await $host.get(`api/item/latest`)
+  return data
+}
+
+export const deleteItem = async ({ id, userId }: any) => {
+  const { data } = await $authHost.delete(`api/item/${id}`, {
+    data: { userId },
+  })
   return data
 }

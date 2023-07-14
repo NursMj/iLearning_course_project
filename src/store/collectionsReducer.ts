@@ -1,57 +1,98 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchCollections, fetchOneCollection } from '../http/collectionApi'
+import {
+  fetchUserCollections,
+  fetchLargestCollections,
+  fetchOneCollection,
+} from '../http/collectionApi'
 
-export const fetchData = createAsyncThunk('collections/fetchData', async () => {
-  const data = await fetchCollections()
-  return data
-})
+export const getUserCollections = createAsyncThunk(
+  'collections/getUserCollections',
+  async (userId: number) => {
+    const data = await fetchUserCollections(userId)
+    return data
+  }
+)
 
-export const fetchCurrent = createAsyncThunk(
-  'collections/fetchCurrent',
+export const getLargestCollections = createAsyncThunk(
+  'collections/getLargestCollections',
+  async () => {
+    const data = await fetchLargestCollections()
+    return data
+  }
+)
+
+export const getCurrentCollection = createAsyncThunk(
+  'collections/getCurrentCollection',
   async (id: number) => {
     const data = await fetchOneCollection(id)
-    return (data)
+    return data
   }
 )
 
 const collectionsSlice = createSlice({
   name: 'collections',
   initialState: {
-    collections: [],
-    loading: false,
-    error: null as any,
-    currentCollection: {},
-    currentIsLoading: false,
-    currentError: null as any,
+    collections: {
+      data: [],
+      owner: {} as any,
+      isLoading: false,
+      error: null as any,
+    },
+    currentCollection: {
+      data: {},
+      isLoading: false,
+      error: null as any,
+    },
+    largestCollections: {
+      data: [],
+      isLoading: false,
+      error: null as any,
+    }
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchData.pending, (state) => {
-      state.loading = true
+    builder.addCase(getUserCollections.pending, (state) => {
+      state.collections.isLoading = true
     })
 
-    builder.addCase(fetchData.fulfilled, (state, action) => {
-      state.loading = false
-      state.collections = action.payload.rows
+    builder.addCase(getUserCollections.fulfilled, (state, action) => {
+      state.collections.isLoading = false
+      state.collections.data = action.payload.Collections
+      state.collections.owner = Object.assign({}, action.payload)
+      delete state.collections.owner.Collections
     })
 
-    builder.addCase(fetchData.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.error.message
+    builder.addCase(getUserCollections.rejected, (state, action) => {
+      state.collections.isLoading = false
+      state.collections.error = action.error.message
     })
 
-    builder.addCase(fetchCurrent.pending, (state) => {
-      state.currentIsLoading = true
+    builder.addCase(getCurrentCollection.pending, (state) => {
+      state.currentCollection.isLoading = true
     })
 
-    builder.addCase(fetchCurrent.fulfilled, (state, action) => {
-      state.currentIsLoading = false
-      state.currentCollection = action.payload
+    builder.addCase(getCurrentCollection.fulfilled, (state, action) => {
+      state.currentCollection.isLoading = false
+      state.currentCollection.data = action.payload
     })
 
-    builder.addCase(fetchCurrent.rejected, (state, action) => {
-      state.currentIsLoading = false
-      state.currentError = action.error.message
+    builder.addCase(getCurrentCollection.rejected, (state, action) => {
+      state.currentCollection.isLoading = false
+      state.currentCollection.error = action.error.message
+    })
+
+    builder.addCase(getLargestCollections.pending, (state) => {
+      state.largestCollections.isLoading = true
+    })
+
+    builder.addCase(getLargestCollections.fulfilled, (state, action) => {
+      state.largestCollections.isLoading = false
+      state.largestCollections.data = action.payload
+    })
+
+    builder.addCase(getLargestCollections.rejected, (state, action) => {
+      state.largestCollections.isLoading = false
+      state.largestCollections.error = action.error.message
     })
   },
 })

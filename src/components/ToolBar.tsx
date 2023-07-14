@@ -4,10 +4,10 @@ import AddIcon from '@mui/icons-material/Add'
 // import EditIcon from '@mui/icons-material/Edit'
 
 function Toolbar(props: any) {
-  const { setShowModal } = props.props
-  const canChange = false
+  const { setShowModal, isOwner } = props.props
 
-  if (canChange) return (
+
+  if (isOwner) return (
     <div className="toolbar mb-3">
       <Button
         className="me-3"

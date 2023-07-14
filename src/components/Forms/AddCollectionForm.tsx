@@ -8,20 +8,27 @@ import { Alert, Grid, Typography } from '@mui/material'
 import ImageUploader from '../ImageUploder'
 import DynamicInputFields from '../DynamicInputField'
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createCollection } from '../../http/collectionApi'
 import { toast } from 'react-toastify'
 import MySpinner from '../../common/MySpinner'
-import { refreshCollections } from '../../utils/refreshers'
 import getFields from '../../utils/getFields'
+import { getUserCollections } from '../../store/collectionsReducer'
+import { getTopics } from '../../store/topicsReducer'
 
 function AddCollectionForm({ handleClose }: any) {
-  const topics = useSelector((state: any) => state.topics.topics)
-  const userId = useSelector((state: any) => state.user.user.id)
+  const topics = useSelector((state: any) => state.topics.topics.data)
+  const topicsLoading = useSelector(
+    (state: any) => state.topics.topics.isLoading
+  )
+  // const topicsError = useSelector((state: any) => state.topics.topics.error)
+  const userId = useSelector(
+    (state: any) => state.collections.collections.owner.id
+  )
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
-  const [selectedTopicId, setSelectedTopicId] = useState(topics[0].id)
+  const [selectedTopicId, setSelectedTopicId] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState({
@@ -63,7 +70,7 @@ function AddCollectionForm({ handleClose }: any) {
         toast.success('Collection created successfully!', {
           autoClose: 1500,
         })
-        refreshCollections(dispatch)
+        dispatch(getUserCollections(userId) as any)
       } catch (e: any) {
         if (e.response) {
           setError(e.response.data.message)
@@ -77,6 +84,10 @@ function AddCollectionForm({ handleClose }: any) {
       setError('Fill in required fields')
     }
   }
+
+  useEffect(() => {
+    dispatch(getTopics() as any)
+  }, [])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -108,15 +119,19 @@ function AddCollectionForm({ handleClose }: any) {
               margin="dense"
               select
               label="Topic"
-              defaultValue={topics[0].id}
+              // defaultValue={selectedTopicId}
               value={selectedTopicId}
-              onChange={(e) => setSelectedTopicId(e.target.value)}
+              onChange={(e) => setSelectedTopicId(e.target.value as any)}
             >
-              {topics.map((t: any) => (
-                <MenuItem key={t.id} value={t.id}>
-                  {t.name}
-                </MenuItem>
-              ))}
+              {topicsLoading ? (
+                <MySpinner />
+              ) : (
+                topics.map((t: any) => (
+                  <MenuItem key={t.id} value={t.id}>
+                    {t.name}
+                  </MenuItem>
+                ))
+              )}
             </TextField>
           </Grid>
           <Grid item xs={12}>

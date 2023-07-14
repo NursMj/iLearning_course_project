@@ -7,18 +7,7 @@ export function extractNotEmptyFields(itemFields: any) {
 
 export default function extractItemFields(allFields: any) {
   const itemFields = Object.entries(allFields).reduce((acc: any, [key, value]) => {
-    const otherFilds = [
-      'id',
-      'updatedAt',
-      'createdAt',
-      'UserId',
-      'name',
-      'desc',
-      'img',
-      'TopicId',
-      'Topic'
-    ]
-    if (otherFilds.includes(key)) return acc
+    if (!key.includes("_name") && !key.includes("_value")) return acc
     acc[key] = value
     return acc
   }, {})
