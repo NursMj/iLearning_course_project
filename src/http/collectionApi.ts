@@ -1,18 +1,10 @@
 import { $authHost, $host } from './index'
 
-export const createCollection = async ({
-  name,
-  desc,
-  topicId,
-  userId,
-  itemFields,
-}: any) => {
-  const { data } = await $authHost.post('api/collection', {
-    name,
-    desc,
-    topicId,
-    userId,
-    itemFields,
+export const createCollection = async (formData: any) => {
+  const { data } = await $authHost.post('api/collection', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   })
   return data
 }
@@ -24,20 +16,20 @@ export const fetchCollections = async () => {
 
 export const fetchUserCollections = async (id: number) => {
   const { data } = await $host.get(`api/collection/user/${id}`)
-  console.log(id)
-  console.log(data)
+  // console.log(id)
+  // console.log(data)
   return data
 }
 
 export const fetchLargestCollections = async () => {
   const { data } = await $host.get('api/collection/largest')
-  console.log(data)
+  // console.log(data)
   return data
 }
 
 export const fetchOneCollection = async (id: number) => {
   const { data } = await $host.get(`api/collection/${id}`)
-  console.log(data)
+  // console.log(data)
   return data
 }
 

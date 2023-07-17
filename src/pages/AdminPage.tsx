@@ -1,16 +1,20 @@
 import { Box, Paper } from '@mui/material'
 import Container from '@mui/material/Container'
-// import { useSelector } from 'react-redux'
-// import { setTopics } from '../store/topicsReducer'
-// import { useState } from 'react'
-// import { fetchTopics } from '../http/topicsApi'
 import MyLink from '../common/MyLink'
 import { ALL_USERS_ROUTE, TOPICS_ROUTE } from '../utils/consts'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { checkUser } from '../store/userReducer'
 
 function AdminPage() {
   const paperStyle = {
-    p: 2
+    p: 3
   }
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(checkUser() as any)
+  }, [])
 
   return (
     <Container>

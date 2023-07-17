@@ -4,8 +4,8 @@ import { HOME_ROUTE } from '../utils/consts'
 import { useSelector } from 'react-redux'
 
 const AppRouter = () => {
-  const user = useSelector((state: any) => state.user)
-  const isAdmin = user.user.role === 'ADMIN'
+  const user = useSelector((state: any) => state.user.user)
+  const isAdmin = user.data.role === 'ADMIN'
 
   return (
     <Routes>

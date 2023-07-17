@@ -10,18 +10,17 @@ import DynamicInputFields from '../DynamicInputField'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { createCollection } from '../../http/collectionApi'
-import { toast } from 'react-toastify'
 import MySpinner from '../../common/MySpinner'
 import getFields from '../../utils/getFields'
 import { getUserCollections } from '../../store/collectionsReducer'
 import { getTopics } from '../../store/topicsReducer'
+import { showErrorToast, showSuccessToast } from '../../utils/showToest'
 
 function AddCollectionForm({ handleClose }: any) {
   const topics = useSelector((state: any) => state.topics.topics.data)
   const topicsLoading = useSelector(
     (state: any) => state.topics.topics.isLoading
   )
-  // const topicsError = useSelector((state: any) => state.topics.topics.error)
   const userId = useSelector(
     (state: any) => state.collections.collections.owner.id
   )
@@ -31,6 +30,7 @@ function AddCollectionForm({ handleClose }: any) {
   const [selectedTopicId, setSelectedTopicId] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [file, setFile] = useState('')
   const [fields, setFields] = useState({
     integer: [],
     string: [],
@@ -57,26 +57,20 @@ function AddCollectionForm({ handleClose }: any) {
     if (name && desc && selectedTopicId) {
       setIsLoading(true)
       setError('')
+      const formData = new FormData()
+      formData.append('img', file)
+      formData.append('name', name)
+      formData.append('desc', desc)
+      formData.append('topicId', selectedTopicId)
+      formData.append('userId', userId)
+      formData.append('itemFields', JSON.stringify(getFields(fields)))
       try {
-        const topicId = selectedTopicId.toString()
-        await createCollection({
-          name,
-          desc,
-          topicId,
-          userId,
-          itemFields: getFields(fields),
-        })
+        await createCollection(formData)
         handleClose()
-        toast.success('Collection created successfully!', {
-          autoClose: 1500,
-        })
+        showSuccessToast('Collection created successfully')
         dispatch(getUserCollections(userId) as any)
       } catch (e: any) {
-        if (e.response) {
-          setError(e.response.data.message)
-        } else {
-          setError(e.message)
-        }
+        showErrorToast(e)
         console.log(e)
       }
       setIsLoading(false)
@@ -119,7 +113,6 @@ function AddCollectionForm({ handleClose }: any) {
               margin="dense"
               select
               label="Topic"
-              // defaultValue={selectedTopicId}
               value={selectedTopicId}
               onChange={(e) => setSelectedTopicId(e.target.value as any)}
             >
@@ -141,13 +134,14 @@ function AddCollectionForm({ handleClose }: any) {
               label="Multiline"
               multiline
               fullWidth
-              rows={2}
+              minRows={2}
+              maxRows={8}
               value={desc}
               onChange={(e: any) => setDesc(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
-            <ImageUploader />
+            <ImageUploader file={file} setFile={setFile} />
           </Grid>
         </Grid>
         <hr />

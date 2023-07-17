@@ -10,15 +10,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import checkIsOwner from '../utils/checkIsOwner'
 import { useParams } from 'react-router-dom'
 import { getUserCollections } from '../store/collectionsReducer'
+import { checkUser } from '../store/userReducer'
 
 function UserPage() {
   const ownerId = Number(useParams().id)
   const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
-  const user = useSelector((state: any) => state.user.user)
-  const contentOwner = useSelector((state: any) => state.collections.collections.owner)
-  const collections = useSelector((state: any) => state.collections.collections.data)
-  const loading = useSelector((state: any) => state.collections.collections.isloading)
+  const user = useSelector((state: any) => state.user.user.data)
+  const contentOwner = useSelector(
+    (state: any) => state.collections.collections.owner
+  )
+  const collections = useSelector(
+    (state: any) => state.collections.collections.data
+  )
+  const loading = useSelector(
+    (state: any) => state.collections.collections.isloading
+  )
   const error = useSelector((state: any) => state.collections.collections.error)
   const isOwner = checkIsOwner(user, ownerId)
   const dispatch = useDispatch()
@@ -26,10 +33,9 @@ function UserPage() {
   const handleClose = () => setShowModal(false)
 
   useEffect(() => {
-    dispatch(getUserCollections( ownerId) as any)
+    dispatch(checkUser() as any)
+    dispatch(getUserCollections(ownerId) as any)
   }, [ownerId])
-
-  console.log(collections)
 
   const modalContent = <AddCollectionForm handleClose={handleClose} />
 
@@ -38,6 +44,7 @@ function UserPage() {
       <Typography variant="h4" className="mb-3">
         {t('user.title')} {contentOwner.name}
       </Typography>
+      <hr />
       <Toolbar props={{ setShowModal, isOwner }} />
       {error && <Alert>{error}</Alert>}
       {loading && <MySpinner />}

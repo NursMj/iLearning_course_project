@@ -92,7 +92,7 @@ const DesktopMenu = (props: any) => {
         />
       )}
       <MyLink
-        to={`/user/${user.id}`}
+        to={`/user/${user.data.id}`}
         content={
           <MenuItem onClick={handleMenuClose}>
             {t('header.menu_item1')}

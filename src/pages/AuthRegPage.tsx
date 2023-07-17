@@ -6,7 +6,7 @@ import AuthRegForm from '../components/Forms/AuthRegForm'
 import { useDispatch } from 'react-redux'
 import { setIsAuth, setUser } from '../store/userReducer'
 import { HOME_ROUTE } from '../utils/consts'
-import { toast } from 'react-toastify'
+import { showSuccessToast } from '../utils/showToest'
 
 function AuthRegPage() {
   const location = useLocation()
@@ -28,12 +28,10 @@ function AuthRegPage() {
         let data
         if (isLogin) {
           data = await login(email, password)
-          toast.success('Loged in successful!', {
-            autoClose: 1500,
-          })
+          showSuccessToast('Loged in successful!')
         } else {
           data = await registration(name, email, password)
-          toast.success('Signup successful!')
+          showSuccessToast('Signup successful!')
         }
         dispatch(setIsAuth(true))
         dispatch(setUser(data))

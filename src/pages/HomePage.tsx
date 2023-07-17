@@ -28,7 +28,7 @@ function HomePage() {
   return (
     <>
       <div className="mb-5">
-        <h3 className="mb-3">{t('home.last_added_items')}</h3>
+        <h3>{t('home.last_added_items')}</h3>
         {latestIsLoading ? (
           <MySpinner />
         ) : (
@@ -36,7 +36,7 @@ function HomePage() {
         )}
       </div>
       <div className="mb-5">
-        <h3 className="mb-3">{t('home.5_biggest_collections')}</h3>
+        <h3>{t('home.5_biggest_collections')}</h3>
         {loading ? (
           <MySpinner />
         ) : (
@@ -44,7 +44,7 @@ function HomePage() {
         )}
       </div>
       <div className="mb-5">
-        <h3 className="mb-3">{t('home.teg_cloud')}</h3>
+        <h3 className="mb-1">{t('home.teg_cloud')}</h3>
         {tegs.map((teg: string, i: number) => (
           <Button key={i}>{teg}</Button>
         ))}

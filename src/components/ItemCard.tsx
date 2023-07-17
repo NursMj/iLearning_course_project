@@ -1,20 +1,19 @@
-import CardContent from '@mui/material/CardContent'
-import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import MyLink from '../common/MyLink'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import { Box } from '@mui/material'
+import { Box, IconButton, Paper } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteItem } from '../http/itemApi'
 import { useState } from 'react'
 import MySpinner from '../common/MySpinner'
-import { toast } from 'react-toastify'
 import { deleteCollection } from '../http/collectionApi'
 import { useLocation } from 'react-router-dom'
 import checkIsOwner from '../utils/checkIsOwner'
 import { getCollectionItems } from '../store/itemsReducer'
 import { getUserCollections } from '../store/collectionsReducer'
+// import { checkUser } from '../store/userReducer'
+import { showErrorToast, showInfoToast } from '../utils/showToest'
 
 function ItemCard(props: any) {
   const { item, type } = props
@@ -22,12 +21,10 @@ function ItemCard(props: any) {
   const isItem = type === 'item'
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
-  const user = useSelector((state: any) => state.user.user)
+  const user = useSelector((state: any) => state.user.user.data)
   const deleteFunction = isItem ? deleteItem : deleteCollection
   const idForRefresh = isItem ? item.CollectionId : item.UserId
-  const refreshFunction = isItem
-    ? getCollectionItems
-    : getUserCollections
+  const refreshFunction = isItem ? getCollectionItems : getUserCollections
   const location = useLocation()
   const ownerId =
     useSelector(
@@ -42,13 +39,12 @@ function ItemCard(props: any) {
     try {
       const res = await deleteFunction({ id: item.id, userId: ownerId })
       dispatch(refreshFunction(idForRefresh) as any)
-      toast.info(res.message, {
-        autoClose: 1500,
-      })
+      showInfoToast(res.message)
     } catch (e: any) {
-      console.log(e.message)
+      showErrorToast(e)
     }
     setIsLoading(false)
+    // dispatch(checkUser() as any)
   }
 
   function handleEdit(e: any) {
@@ -86,7 +82,7 @@ function ItemCard(props: any) {
     <MyLink
       to={path}
       content={
-        <Card sx={{ minWidth: 275, position: 'relative' }}>
+        <Paper sx={{ width: '270px', position: 'relative', p: 2 }}>
           {showActionBtns && (
             <Box
               sx={{
@@ -98,17 +94,19 @@ function ItemCard(props: any) {
               }}
             >
               {isLoading && <MySpinner />}
-              <EditIcon onClick={handleEdit} />
-              <DeleteIcon onClick={handleDelete} />
+              <IconButton onClick={handleEdit}>
+                <EditIcon />
+              </IconButton>
+              <IconButton onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
             </Box>
           )}
-          <CardContent>
-            {isItem ? <ItemContent /> : <CollectionContent />}
-            <Typography variant="body2">
-              Author: {item?.Collection?.User?.name || item?.User?.name}
-            </Typography>
-          </CardContent>
-        </Card>
+          {isItem ? <ItemContent /> : <CollectionContent />}
+          <Typography variant="body2">
+            Author: {item?.Collection?.User?.name || item?.User?.name}
+          </Typography>
+        </Paper>
       }
     />
   )

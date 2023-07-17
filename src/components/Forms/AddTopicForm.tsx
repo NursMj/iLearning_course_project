@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Grid, Typography } from '@mui/material'
 import { useState } from 'react'
 import { createTopic } from '../../http/topicsApi'
-import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { getTopics } from '../../store/topicsReducer'
+import { showSuccessToast } from '../../utils/showToest'
 
 function AddTopicForm({ handleClose }: any) {
   const { t } = useTranslation()
@@ -24,9 +24,7 @@ function AddTopicForm({ handleClose }: any) {
       setError('')
       handleClose()
       dispatch(getTopics() as any)
-      toast.success('Topic created successfully!', {
-        autoClose: 1500,
-      })
+      showSuccessToast('Topic created successfully!')
     } catch (e: any) {
       if (e.response) {
         setError(e.response.data.message)

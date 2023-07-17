@@ -5,7 +5,6 @@ import DialogContent from '@mui/material/DialogContent'
 // import { useTranslation } from 'react-i18next'
 import { Alert, Grid, Typography } from '@mui/material'
 import { useState } from 'react'
-import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import extractItemFields from '../../utils/extractItemFields'
 import generateFieldValues from '../../utils/generateFieldValues'
@@ -13,6 +12,8 @@ import getValueFromFieldName from '../../utils/getValueFromFieldName'
 import { createItem } from '../../http/itemApi'
 import MySpinner from '../../common/MySpinner'
 import { getCollectionItems } from '../../store/itemsReducer'
+import { showErrorToast, showSuccessToast } from '../../utils/showToest'
+import { checkUser } from '../../store/userReducer'
 
 function AddItemForm({ handleClose }: any) {
   // const { t } = useTranslation()
@@ -45,19 +46,14 @@ function AddItemForm({ handleClose }: any) {
     try {
       await createItem({ fieldValues, fieldNames, collectionId, userId })
       handleClose()
-      toast.success('Item created successfully!', {
-        autoClose: 1500,
-      })
+      showSuccessToast('Item created successfully!')
       dispatch(getCollectionItems(collectionId) as any)
     } catch (e: any) {
-      if (e.response) {
-        setError(e.response.data.message)
-      } else {
-        setError(e.message)
-      }
+      showErrorToast(e)
       console.log(e)
     }
     setIsLoading(false)
+    dispatch(checkUser() as any)
   }
 
   return (

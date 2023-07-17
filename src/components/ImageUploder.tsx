@@ -1,26 +1,50 @@
-import React from 'react'
+import { IconButton, Paper } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-const ImageUploader: React.FC = () => {
+const ImageUploader = ({file, setFile}: any) => {
   const onDrop = (acceptedFiles: File[]) => {
-    // Handle the dropped files
-    console.log(acceptedFiles)
+    setFile(acceptedFiles[0])
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
-    <div
-      {...getRootProps()}
-      style={{ border: isDragActive ? '1px dashed #007bff'  :'1px dashed gray', padding: '2rem' }}
-    >
-      <input {...getInputProps()} accept="image/*" />
-      {isDragActive ? (
-        <p style={{color: '#007bff'}}>Drop the files here...</p>
+    <>
+      {!file ? (
+        <div
+          {...getRootProps()}
+          style={{
+            border: isDragActive ? '1px dashed #007bff' : '1px dashed gray',
+            padding: '2rem',
+          }}
+        >
+          <>
+            <input {...getInputProps()} accept="image/*" />
+            {isDragActive ? (
+              <p style={{ color: '#007bff' }}>Drop the files here...</p>
+            ) : (
+              <p>Drag and drop an image or click to browse (optional)</p>
+            )}
+          </>
+        </div>
       ) : (
-        <p>Drag and drop an image or click to browse (optional)</p>
+        <Paper
+          sx={{
+            p: 1,
+            pl: 2,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <div>Image uploaded: {file.name}</div>
+          <IconButton onClick={()=> setFile(null)}>
+            <DeleteIcon />
+          </IconButton>
+        </Paper>
       )}
-    </div>
+    </>
   )
 }
 

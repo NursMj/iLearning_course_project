@@ -1,8 +1,12 @@
 import { $authHost, $host } from './index'
 import jwt_decode from 'jwt-decode'
 
-const registration = async (name: string, email: string, password: string) => {
-  const {data} = await $host.post('api/user/registration', {
+export const registration = async (
+  name: string,
+  email: string,
+  password: string
+) => {
+  const { data } = await $host.post('api/user/registration', {
     name,
     email,
     password,
@@ -12,8 +16,8 @@ const registration = async (name: string, email: string, password: string) => {
   return jwt_decode(data.token)
 }
 
-const login = async (email: string, password: string) => {
-  const {data} = await $host.post('api/user/login', {
+export const login = async (email: string, password: string) => {
+  const { data } = await $host.post('api/user/login', {
     email,
     password,
   })
@@ -21,10 +25,34 @@ const login = async (email: string, password: string) => {
   return jwt_decode(data.token)
 }
 
-const check = async () => {
-  const {data} = await $authHost.get('api/user/auth')
+export const check = async () => {
+  const { data } = await $authHost.get('api/user/auth')
   localStorage.setItem('token', data.token)
   return jwt_decode(data.token)
 }
 
-export { registration, login, check }
+export const fetchAllUsers = async () => {
+  const { data } = await $authHost.get('api/user/')
+  return data
+}
+
+export const deleteUser = async (id: number) => {
+  const { data } = await $authHost.delete(`api/user/${id}`)
+  return data
+}
+
+export const updateUserRole = async ({ id, role }: any) => {
+  const { data } = await $authHost.put(`api/user/update-by-admin/${id}`, { role })
+  return data
+}
+
+export const updateUserStatus = async ({ id, blocked }: any) => {
+  const { data } = await $authHost.put(`api/user/update-by-admin/${id}`, { blocked })
+  return data
+}
+
+export const updateUser = async () => {
+  const { data } = await $authHost.get('api/user/auth')
+  localStorage.setItem('token', data.token)
+  return jwt_decode(data.token)
+}

@@ -1,6 +1,6 @@
 export function extractNotEmptyFields(itemFields: any) {
   return Object.entries(itemFields).reduce((acc: any, [key, value]) => {
-    if (value != '') acc[key] = value
+    if (value != null) acc[key] = value
     return acc
   }, {})
 }

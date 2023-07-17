@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next'
 import MyLink from '../common/MyLink'
 import HeaderMenu from './HeaderMenu'
 import { setIsAuth, setUser } from '../store/userReducer'
-import { toast } from 'react-toastify'
+import { showInfoToast } from '../utils/showToest'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -75,8 +75,8 @@ export default function Header() {
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-  const user = useSelector((state: any) => state.user)
-  const isAdmin = user.user.role === 'ADMIN'
+  const user = useSelector((state: any) => state.user.user)
+  const isAdmin = user.data.role === 'ADMIN'
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -99,9 +99,7 @@ export default function Header() {
     dispatch(setUser({}))
     dispatch(setIsAuth(false))
     localStorage.setItem('token', '')
-    toast.info('Loged out', {
-      autoClose: 1500,
-    })
+    showInfoToast('Loged out')
   }
 
   const menuId = 'account-menu'
@@ -141,7 +139,7 @@ export default function Header() {
               onChange={() => dispatch(setUnsetDarkMode())}
             />
             <LanguageSelect />
-            <Typography>{user.user.name}</Typography>
+            <Typography>{user.data.name}</Typography>
             {user.isAuth ? (
               isAdmin ? (
                 <IconButton

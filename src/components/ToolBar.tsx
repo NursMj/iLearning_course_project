@@ -1,5 +1,6 @@
 import { Button } from 'react-bootstrap'
 import AddIcon from '@mui/icons-material/Add'
+import { Box } from '@mui/material'
 // import DeleteIcon from '@mui/icons-material/Delete'
 // import EditIcon from '@mui/icons-material/Edit'
 
@@ -8,13 +9,13 @@ function Toolbar(props: any) {
 
 
   if (isOwner) return (
-    <div className="toolbar mb-3">
+    <Box sx={{display: 'flex', justifyContent: 'end'}}>
       <Button
         className="me-3"
         variant="success"
         onClick={() => setShowModal(true)}
       >
-        <AddIcon />
+        Add <AddIcon />
       </Button>
       {/* <Button
         className="me-3"
@@ -24,7 +25,7 @@ function Toolbar(props: any) {
       <Button className="me-3" variant="danger">
         <DeleteIcon />
       </Button> */}
-    </div>
+    </Box>
   )
 }
 
