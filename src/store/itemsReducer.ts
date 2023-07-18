@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchCollectionItems, fetchLatestItems, fetchOneItem } from '../http/itemApi'
+import {
+  fetchCollectionItems,
+  fetchLatestItems,
+  fetchOneItem,
+} from '../http/itemApi'
+import extractItemFields from '../utils/extractItemFields'
 
 export const getCollectionItems = createAsyncThunk(
   'items/getCollectionItems',
@@ -11,9 +16,13 @@ export const getCollectionItems = createAsyncThunk(
 
 export const getCurrentItem = createAsyncThunk(
   'items/getCurrentItem',
-  async (id: number) => {
+  async (id: number, { getState }) => {
+    const state: any = getState()
     const data = await fetchOneItem(id)
-    return data
+    const myLike = data.Likes.find(
+      (l: any) => l.UserId === state.user.user.data.id
+    )
+    return { ...data, myLike }
   }
 )
 
@@ -31,9 +40,14 @@ const itemsSlice = createSlice({
     items: [],
     loading: false,
     error: null as any,
-    currentItem: {},
-    currentIsLoading: false,
-    currentError: null as any,
+    currentItem: {
+      data: {},
+      isLoading: false,
+      error: null as any,
+      fieldNames: [],
+      fieldValues: [],
+      likes: 0,
+    },
     latestItems: [],
     latestIsLoading: false,
     latestError: null as any,
@@ -55,17 +69,22 @@ const itemsSlice = createSlice({
     })
 
     builder.addCase(getCurrentItem.pending, (state) => {
-      state.currentIsLoading = true
+      state.currentItem.isLoading = true
     })
 
     builder.addCase(getCurrentItem.fulfilled, (state, action) => {
-      state.currentIsLoading = false
-      state.currentItem = action.payload
+      state.currentItem.isLoading = false
+      state.currentItem.data = action.payload
+      state.currentItem.likes = action.payload.Likes.length
+      state.currentItem.fieldNames = extractItemFields(
+        action.payload.Collection
+      )
+      state.currentItem.fieldValues = extractItemFields(action.payload)
     })
 
     builder.addCase(getCurrentItem.rejected, (state, action) => {
-      state.currentIsLoading = false
-      state.currentError = action.error.message
+      state.currentItem.isLoading = false
+      state.currentItem.error = action.error.message
     })
 
     builder.addCase(getLatestItems.pending, (state) => {

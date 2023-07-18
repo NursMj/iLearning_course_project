@@ -3,7 +3,13 @@ import TextField from '@mui/material/TextField'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 // import { useTranslation } from 'react-i18next'
-import { Alert, Grid, Typography } from '@mui/material'
+import {
+  Alert,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Typography,
+} from '@mui/material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import extractItemFields from '../../utils/extractItemFields'
@@ -14,6 +20,12 @@ import MySpinner from '../../common/MySpinner'
 import { getCollectionItems } from '../../store/itemsReducer'
 import { showErrorToast, showSuccessToast } from '../../utils/showToest'
 import { checkUser } from '../../store/userReducer'
+
+const getFildType = (key: string) => {
+  if (key.includes('integer')) return 'number'
+  if (key.includes('date')) return 'date'
+  return 'text'
+}
 
 function AddItemForm({ handleClose }: any) {
   // const { t } = useTranslation()
@@ -33,8 +45,14 @@ function AddItemForm({ handleClose }: any) {
     event: React.ChangeEvent<HTMLInputElement>,
     valueKey: string
   ) => {
-    const newFields = { ...fieldValues, [valueKey]: event.target.value }
+    const newFields = {
+      ...fieldValues,
+      [valueKey as any]: !valueKey.includes('boolean')
+        ? event.target.value
+        : event.target.checked,
+    }
     setFieldValues(newFields)
+    console.log(newFields)
   }
 
   async function handleSubmit(e: any) {
@@ -67,19 +85,34 @@ function AddItemForm({ handleClose }: any) {
         <Grid container spacing={2}>
           {Object.entries(fieldNames).map(([key, value]) => {
             const valueKey = getValueFromFieldName(key)
+            const type = getFildType(valueKey)
             return (
               <Grid item xs={12} key={key}>
-                <TextField
-                  required
-                  autoFocus={value === 'Name'}
-                  fullWidth
-                  margin="dense"
-                  id={key}
-                  label={value as any}
-                  variant="outlined"
-                  value={fieldValues[valueKey]}
-                  onChange={(e: any) => handleChange(e, valueKey)}
-                />
+                {!key.includes('boolean') ? (
+                  <TextField
+                    required
+                    autoFocus={value === 'Name'}
+                    fullWidth
+                    type={type}
+                    multiline={key.includes('multiline')}
+                    minRows={2}
+                    maxRows={6}
+                    id={key}
+                    label={value as any}
+                    value={fieldValues[valueKey]}
+                    onChange={(e: any) => handleChange(e, valueKey)}
+                  />
+                ) : (
+                  <FormControlLabel
+                    label={value as any}
+                    control={
+                      <Checkbox
+                        checked={fieldValues[valueKey]}
+                        onChange={(e: any) => handleChange(e, valueKey)}
+                      />
+                    }
+                  />
+                )}
               </Grid>
             )
           })}

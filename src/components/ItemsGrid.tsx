@@ -10,7 +10,6 @@ function ItemsGrid(props: any) {
   return (
     <Box
       sx={{
-        paddingTop: '40px',
         paddingBottom: '40px',
         display: 'flex',
         gap: 3,

@@ -47,7 +47,6 @@ function AddTopicForm({ handleClose }: any) {
               required
               autoFocus
               fullWidth
-              margin="dense"
               id="topic-name"
               label="Topic name"
               variant="outlined"

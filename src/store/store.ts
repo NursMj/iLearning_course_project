@@ -1,8 +1,3 @@
-import darkModeReducer from './darkModeReducer'
-import userReducer from './userReducer'
-import collectionsReducer from './collectionsReducer'
-import itemsReducer from './itemsReducer'
-import topicsReducer from './topicsReducer'
 import { configureStore } from '@reduxjs/toolkit'
 import {
   persistStore,
@@ -15,6 +10,11 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import darkModeReducer from './darkModeReducer'
+import userReducer from './userReducer'
+import collectionsReducer from './collectionsReducer'
+import itemsReducer from './itemsReducer'
+import topicsReducer from './topicsReducer'
 
 const persistConfig = {
   key: 'root',
@@ -24,7 +24,7 @@ const persistConfig = {
 
 const persistedDarkModeReducer = persistReducer(persistConfig, darkModeReducer)
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     darkMode: persistedDarkModeReducer,
     user: userReducer,
@@ -41,3 +41,4 @@ export const store = configureStore({
 })
 
 export let persistor = persistStore(store)
+export { store }

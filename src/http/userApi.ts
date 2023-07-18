@@ -4,7 +4,8 @@ import jwt_decode from 'jwt-decode'
 export const registration = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  actionType: string = 'register',
 ) => {
   const { data } = await $host.post('api/user/registration', {
     name,
@@ -12,7 +13,9 @@ export const registration = async (
     password,
     role: 'USER',
   })
-  localStorage.setItem('token', data.token)
+  if (actionType !== 'add-user') {
+    localStorage.setItem('token', data.token)
+  }
   return jwt_decode(data.token)
 }
 

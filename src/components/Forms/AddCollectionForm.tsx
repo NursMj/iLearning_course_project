@@ -45,8 +45,7 @@ function AddCollectionForm({ handleClose }: any) {
     setFields((prevState: any) => {
       if (type === 'integer') return { ...prevState, integer: newFields }
       if (type === 'string') return { ...prevState, string: newFields }
-      if (type === 'multiline')
-        return { ...prevState, multilineFields: newFields }
+      if (type === 'multiline') return { ...prevState, multiline: newFields }
       if (type === 'boolean') return { ...prevState, boolean: newFields }
       if (type === 'date') return { ...prevState, date: newFields }
     })
@@ -97,7 +96,6 @@ function AddCollectionForm({ handleClose }: any) {
               required
               autoFocus
               fullWidth
-              margin="dense"
               id="collection-name"
               label="Collection name"
               variant="outlined"
@@ -110,7 +108,6 @@ function AddCollectionForm({ handleClose }: any) {
               id="topic-select"
               required
               fullWidth
-              margin="dense"
               select
               label="Topic"
               value={selectedTopicId}

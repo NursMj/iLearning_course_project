@@ -28,10 +28,10 @@ function AuthRegPage() {
         let data
         if (isLogin) {
           data = await login(email, password)
-          showSuccessToast('Loged in successful!')
+          showSuccessToast('Loged in successfully!')
         } else {
           data = await registration(name, email, password)
-          showSuccessToast('Signup successful!')
+          showSuccessToast('Signup successfully!')
         }
         dispatch(setIsAuth(true))
         dispatch(setUser(data))

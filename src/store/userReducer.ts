@@ -55,7 +55,6 @@ const userSlice = createSlice({
 
     builder.addCase(getAllUsers.pending, (state) => {
       state.allUsers.isLoading = false
-      console.log(localStorage.getItem('token'))
     })
 
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
@@ -66,9 +65,7 @@ const userSlice = createSlice({
     builder.addCase(getAllUsers.rejected, (state, action) => {
       state.allUsers.isLoading = false
       state.allUsers.error = action.error.message
-      console.log(action.error)
       showErrorToast(action.error)
-      // showErrorToast({message:'You have been blocked or removed from admins'})
     })
   },
 })
