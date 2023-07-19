@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import {
-  fetchCollectionItems,
-  fetchLatestItems,
-  fetchOneItem,
-} from '../http/itemApi'
+import { fetchItems, fetchLatestItems, fetchOneItem } from '../http/itemApi'
 import extractItemFields from '../utils/extractItemFields'
 
 export const getCollectionItems = createAsyncThunk(
   'items/getCollectionItems',
-  async (id: number) => {
-    const data = await fetchCollectionItems(id)
+  async ({ collectionId: id }: any) => {
+    const data = await fetchItems({ collectionId: id })
+    return data
+  }
+)
+
+export const getTagItems = createAsyncThunk(
+  'items/getTagItems',
+  async ({ tagId: id }: any) => {
+    const data = await fetchItems({ tagId: id })
     return data
   }
 )
@@ -37,35 +41,56 @@ export const getLatestItems = createAsyncThunk(
 const itemsSlice = createSlice({
   name: 'items',
   initialState: {
-    items: [],
-    loading: false,
-    error: null as any,
+    items: {
+      data: [],
+      loading: false,
+      error: null as any,
+      tag: {},
+    },
     currentItem: {
       data: {},
       isLoading: false,
       error: null as any,
       fieldNames: [],
       fieldValues: [],
+      tags: [],
       likes: 0,
     },
-    latestItems: [],
-    latestIsLoading: false,
-    latestError: null as any,
+    latestItems: {
+      data: [],
+      isLoading: false,
+      error: null as any,
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getCollectionItems.pending, (state) => {
-      state.loading = true
+      state.items.loading = true
     })
 
     builder.addCase(getCollectionItems.fulfilled, (state, action) => {
-      state.loading = false
-      state.items = action.payload
+      state.items.loading = false
+      state.items.data = action.payload
     })
 
     builder.addCase(getCollectionItems.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.error.message
+      state.items.loading = false
+      state.items.error = action.error.message
+    })
+
+    builder.addCase(getTagItems.pending, (state) => {
+      state.items.loading = true
+    })
+
+    builder.addCase(getTagItems.fulfilled, (state, action) => {
+      state.items.loading = false
+      state.items.data = action.payload.Items
+      state.items.tag = { id: action.payload.id, name: action.payload.name }
+    })
+
+    builder.addCase(getTagItems.rejected, (state, action) => {
+      state.items.loading = false
+      state.items.error = action.error.message
     })
 
     builder.addCase(getCurrentItem.pending, (state) => {
@@ -76,6 +101,7 @@ const itemsSlice = createSlice({
       state.currentItem.isLoading = false
       state.currentItem.data = action.payload
       state.currentItem.likes = action.payload.Likes.length
+      state.currentItem.tags = action.payload.Tags
       state.currentItem.fieldNames = extractItemFields(
         action.payload.Collection
       )
@@ -88,17 +114,17 @@ const itemsSlice = createSlice({
     })
 
     builder.addCase(getLatestItems.pending, (state) => {
-      state.latestIsLoading = true
+      state.latestItems.isLoading = true
     })
 
     builder.addCase(getLatestItems.fulfilled, (state, action) => {
-      state.latestIsLoading = false
-      state.latestItems = action.payload
+      state.latestItems.isLoading = false
+      state.latestItems.data = action.payload
     })
 
     builder.addCase(getLatestItems.rejected, (state, action) => {
-      state.latestIsLoading = false
-      state.latestError = action.error.message
+      state.latestItems.isLoading = false
+      state.latestItems.error = action.error.message
     })
   },
 })

@@ -88,9 +88,9 @@ function AddCollectionForm({ handleClose }: any) {
         <Typography variant="h5" sx={{ textAlign: 'center', mb: 3 }}>
           {t('modal.collaction_form.title')}
         </Typography>
-        {error && <Alert severity="error">{error}</Alert>}
+        {error && <Alert severity="warning">{error}</Alert>}
         {isLoading && <MySpinner />}
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{pt: 2}}>
           <Grid item xs={12} sm={6}>
             <TextField
               required

@@ -34,7 +34,7 @@
   "home": {
     "last_added_items": "Последние айтемы",
     "5_biggest_collections": "5 самых больших коллекций",
-    "teg_cloud": "Облоко тегов"
+    "tag_cloud": "Облоко тегов"
   },
   "user": {
     "title": "Коллекции пользователя "

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Typography, Alert } from '@mui/material'
-import ItemsList from '../components/ItemsGrid'
+import { Typography } from '@mui/material'
+import ItemsGrid from '../components/ItemsGrid'
 import Toolbar from '../components/ToolBar'
 import { useTranslation } from 'react-i18next'
 import AddCollectionForm from '../components/Forms/AddCollectionForm'
@@ -46,9 +46,8 @@ function UserPage() {
       </Typography>
       <hr />
       <Toolbar props={{ setShowModal, isOwner }} />
-      {error && <Alert>{error}</Alert>}
       {loading && <MySpinner />}
-      {!loading && <ItemsList data={collections} type="collection" />}
+      {!loading && <ItemsGrid data={collections} error={error} type="collection" />}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )

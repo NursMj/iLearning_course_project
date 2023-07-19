@@ -2,7 +2,10 @@ import { Box, Typography } from '@mui/material'
 import ItemCard from './ItemCard'
 
 function ItemsGrid(props: any) {
-  const { data, type } = props
+  const { data, type, error } = props
+
+  if (error)
+    return <Typography variant="h6">{error}. Faild to fetch data.</Typography>
 
   if (data.length === 0)
     return <Typography variant="h6">Looks like it is empty here</Typography>

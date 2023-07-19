@@ -1,0 +1,64 @@
+/* Style for the tags container */
+.ReactTags__tags {
+  border: 1px solid #666;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Style for individual tags */
+.ReactTags__tag {
+  display: inline-block;
+  background-color: #eee;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+/* Style for the input container */
+.ReactTags__tagInput {
+  margin-top: 10px;
+  width: 50%;
+}
+
+/* Style for the input field */
+.ReactTags__tagInputField {
+  width: 100%;
+  // border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px;
+}
+
+/* Style for selected tags within the selected container */
+.ReactTags__selected .ReactTags__tag {
+  background-color: #555;
+  color: #fff;
+}
+
+/* Style for the remove button within selected tags */
+.ReactTags__selected .ReactTags__remove {
+  color: #fff;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 20px;
+  padding: 0;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Style for the suggestions container */
+.ReactTags__suggestions {
+  list-style: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+/* Style for the active suggestion */
+.ReactTags__activeSuggestion {
+  background-color: #ccc;
+  color: #fff;
+}

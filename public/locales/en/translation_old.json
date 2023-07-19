@@ -17,5 +17,8 @@
     "delete": "detete",
     "add": "add",
     "edit": "edit"
+  },
+  "home": {
+    "teg_cloud": "Teg cloud"
   }
 }

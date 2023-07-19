@@ -16,6 +16,7 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import { createlike, deleteLike } from '../http/likeApi'
+import MyTag from '../common/MyTag'
 
 function ItemPage() {
   const id = Number(useParams().id)
@@ -23,6 +24,7 @@ function ItemPage() {
   const userId = useSelector((state: any) => state.user.user.data.id)
   const item = useSelector((state: any) => state.items.currentItem.data)
   const likes = useSelector((state: any) => state.items.currentItem.likes)
+  const tags = useSelector((state: any) => state.items.currentItem.tags)
   const myLike = item.myLike
   const isLodaing = useSelector(
     (state: any) => state.items.currentItem.isLodaing
@@ -110,6 +112,14 @@ function ItemPage() {
               </Typography>
             </Grid>
           ))}
+          <Grid item width={'100%'}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              <b>Tags:</b>
+              {tags.map((tag: any) => (
+                <MyTag tag={tag} key={tag.id} />
+              ))}
+            </Box>
+          </Grid>
         </Grid>
       </CardContent>
     </Card>

@@ -61,6 +61,9 @@ function ItemCard(props: any) {
         <Typography color="text.secondary">
           Collection: {item?.Collection?.name}
         </Typography>
+        <Typography color="text.secondary">
+          likes: {item?.likesCount || item?.Likes?.length}
+        </Typography>
       </>
     )
   }

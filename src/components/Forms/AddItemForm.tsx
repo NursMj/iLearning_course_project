@@ -20,6 +20,7 @@ import MySpinner from '../../common/MySpinner'
 import { getCollectionItems } from '../../store/itemsReducer'
 import { showErrorToast, showSuccessToast } from '../../utils/showToest'
 import { checkUser } from '../../store/userReducer'
+import TagInput from '../TagInput/TagInpit'
 
 const getFildType = (key: string) => {
   if (key.includes('integer')) return 'number'
@@ -39,6 +40,7 @@ function AddItemForm({ handleClose }: any) {
   const [fieldValues, setFieldValues] = useState(generatedFieldValues)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [tags, setTags] = useState([{ id: 'Cool', text: 'Cool' }])
   const dispatch = useDispatch()
 
   const handleChange = (
@@ -52,7 +54,6 @@ function AddItemForm({ handleClose }: any) {
         : event.target.checked,
     }
     setFieldValues(newFields)
-    console.log(newFields)
   }
 
   async function handleSubmit(e: any) {
@@ -62,7 +63,7 @@ function AddItemForm({ handleClose }: any) {
     setIsLoading(true)
     setError('')
     try {
-      await createItem({ fieldValues, fieldNames, collectionId, userId })
+      await createItem({ fieldValues, fieldNames, collectionId, userId, tags })
       handleClose()
       showSuccessToast('Item created successfully!')
       dispatch(getCollectionItems(collectionId) as any)
@@ -74,6 +75,8 @@ function AddItemForm({ handleClose }: any) {
     dispatch(checkUser() as any)
   }
 
+
+
   return (
     <form onSubmit={handleSubmit}>
       <DialogContent sx={{ mt: 3 }}>
@@ -82,7 +85,7 @@ function AddItemForm({ handleClose }: any) {
         </Typography>
         {isLoading && <MySpinner />}
         {error && <Alert severity="warning">{error}</Alert>}
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ pt: 2 }}>
           {Object.entries(fieldNames).map(([key, value]) => {
             const valueKey = getValueFromFieldName(key)
             const type = getFildType(valueKey)
@@ -116,6 +119,9 @@ function AddItemForm({ handleClose }: any) {
               </Grid>
             )
           })}
+          <Grid item xs={12}>
+            <TagInput tags={tags} setTags={setTags}/>
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>

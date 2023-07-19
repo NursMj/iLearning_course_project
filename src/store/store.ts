@@ -15,6 +15,7 @@ import userReducer from './userReducer'
 import collectionsReducer from './collectionsReducer'
 import itemsReducer from './itemsReducer'
 import topicsReducer from './topicsReducer'
+import tagReducer from './tagReducer'
 
 const persistConfig = {
   key: 'root',
@@ -31,6 +32,7 @@ const store = configureStore({
     topics: topicsReducer,
     collections: collectionsReducer,
     items: itemsReducer,
+    tags: tagReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

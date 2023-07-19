@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import ItemsList from '../components/ItemsGrid'
+import ItemsGrid from '../components/ItemsGrid'
 import Toolbar from '../components/ToolBar'
 import MyModalDialog from '../common/MyModalDialog'
 import { useEffect, useState } from 'react'
@@ -17,8 +17,9 @@ function CollectionPage() {
   const [showModal, setShowModal] = useState(false)
   const collectionId = Number(useParams().id)
   const user = useSelector((state: any) => state.user.user.data)
-  const items = useSelector((state: any) => state.items.items)
-  const itemsLoading = useSelector((state: any) => state.items.loading)
+  const items = useSelector((state: any) => state.items.items.data)
+  const itemsLoading = useSelector((state: any) => state.items.items.loading)
+  const itemsError = useSelector((state: any) => state.items.items.error)
   const dispatch = useDispatch()
   const collection = useSelector(
     (state: any) => state.collections.currentCollection.data
@@ -31,7 +32,7 @@ function CollectionPage() {
   useEffect(() => {
     dispatch(checkUser() as any)
     dispatch(getCurrentCollection(collectionId) as any)
-    dispatch(getCollectionItems(collectionId) as any)
+    dispatch(getCollectionItems({ collectionId }) as any)
   }, [])
 
   const handleClose = () => setShowModal(false)
@@ -39,8 +40,6 @@ function CollectionPage() {
   const modalContent = <AddItemForm handleClose={handleClose} />
 
   if (isLoading) return <MySpinner />
-
-  console.log(collection.img)
 
   return (
     <>
@@ -83,7 +82,11 @@ function CollectionPage() {
       </Box>
       <hr />
       <Toolbar props={{ setShowModal, isOwner }} />
-      {itemsLoading ? <MySpinner /> : <ItemsList data={items} type="item" />}
+      {itemsLoading ? (
+        <MySpinner />
+      ) : (
+        <ItemsGrid data={items} error={itemsError} type="item" />
+      )}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )

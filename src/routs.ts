@@ -5,6 +5,9 @@ import UserPage from './pages/UserPage'
 import CollectionPage from './pages/CollectionPage'
 import ItemPage from './pages/ItemPage'
 import SearchResultPage from './pages/SearchResultPage'
+import TopicsPage from './pages/TopicsPage'
+import AllUsersPage from './pages/AllUsersPage'
+import TagPage from './pages/TagPage'
 import {
   ADMIN_ROUTE,
   COLLECTION_ROUTE,
@@ -16,9 +19,8 @@ import {
   SEARCH_ROUTE,
   TOPICS_ROUTE,
   ALL_USERS_ROUTE,
+  TAG_ROUTE,
 } from './utils/consts'
-import TopicsPage from './pages/TopicsPage'
-import AllUsersPage from './pages/AllUsersPage'
 
 export const authAdminRoutes = [
   {
@@ -70,5 +72,9 @@ export const publicRoutes = [
   {
     path: ITEM_ROUTE + '/:id',
     Component: ItemPage,
+  },
+  {
+    path: TAG_ROUTE + '/:id',
+    Component: TagPage,
   },
 ]
