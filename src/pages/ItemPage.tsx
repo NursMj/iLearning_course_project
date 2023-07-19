@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCurrentItem } from '../store/itemsReducer'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,23 +44,19 @@ function ItemPage() {
         : fieldValues[`${key.replace('_name', '_value')}`],
     }
   })
+  const [likeLoading, setLikeLoading] = useState(false)
 
   const handleLike = async () => {
+    setLikeLoading(true)
     try {
-      await createlike({ itemId: id, userId })
+      myLike
+        ? await deleteLike(myLike.id)
+        : await createlike({ itemId: id, userId })
       dispatch(getCurrentItem(id) as any)
     } catch (error) {
       console.error('Error liking item:', error)
     }
-  }
-
-  const handleUnlike = async () => {
-    try {
-      await deleteLike(myLike.id)
-      dispatch(getCurrentItem(id) as any)
-    } catch (error) {
-      console.error('Error unliking item:', error)
-    }
+    setLikeLoading(false)
   }
 
   useEffect(() => {
@@ -83,15 +79,15 @@ function ItemPage() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {myLike ? (
-              <IconButton onClick={handleUnlike}>
+            <IconButton onClick={handleLike}>
+              {likeLoading ? (
+                <MySpinner />
+              ) : myLike ? (
                 <ThumbUpAltIcon />
-              </IconButton>
-            ) : (
-              <IconButton onClick={handleLike}>
+              ) : (
                 <ThumbUpOffAltIcon />
-              </IconButton>
-            )}
+              )}
+            </IconButton>
             <span>{likes}</span>
           </Box>
         </Box>

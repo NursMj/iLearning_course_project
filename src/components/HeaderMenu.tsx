@@ -98,7 +98,9 @@ const MobileMenu = (props: any) => {
           <MyLink
             to="/login"
             content={
-              <MenuItem>{t('header.sign_in')}</MenuItem>
+              <MenuItem onClick={handleMobileMenuClose}>
+                {t('header.sign_in')}
+              </MenuItem>
             }
           />
         )
