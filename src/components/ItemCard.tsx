@@ -12,7 +12,6 @@ import { useLocation } from 'react-router-dom'
 import checkIsOwner from '../utils/checkIsOwner'
 import { getCollectionItems } from '../store/itemsReducer'
 import { getUserCollections } from '../store/collectionsReducer'
-// import { checkUser } from '../store/userReducer'
 import { showErrorToast, showInfoToast } from '../utils/showToest'
 
 function ItemCard(props: any) {
@@ -44,7 +43,6 @@ function ItemCard(props: any) {
       showErrorToast(e)
     }
     setIsLoading(false)
-    // dispatch(checkUser() as any)
   }
 
   function handleEdit(e: any) {
@@ -82,36 +80,48 @@ function ItemCard(props: any) {
   }
 
   return (
-    <MyLink
-      to={path}
-      content={
-        <Paper sx={{ width: '270px', position: 'relative', p: 2 }}>
-          {showActionBtns && (
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 10,
-                right: 10,
-                display: 'flex',
-                gap: 1,
-              }}
-            >
-              {isLoading && <MySpinner />}
-              <IconButton onClick={handleEdit}>
-                <EditIcon />
-              </IconButton>
-              <IconButton onClick={handleDelete}>
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          )}
-          {isItem ? <ItemContent /> : <CollectionContent />}
-          <Typography variant="body2">
-            Author: {item?.Collection?.User?.name || item?.User?.name}
-          </Typography>
-        </Paper>
-      }
-    />
+    <Box
+      sx={{
+        m: {xs: '0 auto', sm: 0},
+        width: { xs: '90%',  sm: '270px' },
+      }}
+    >
+      <MyLink
+        to={path}
+        content={
+          <Paper
+            sx={{
+              position: 'relative',
+              p: 2,
+            }}
+          >
+            {showActionBtns && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 10,
+                  right: 10,
+                  display: 'flex',
+                  gap: 1,
+                }}
+              >
+                {isLoading && <MySpinner />}
+                <IconButton onClick={handleEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            )}
+            {isItem ? <ItemContent /> : <CollectionContent />}
+            <Typography variant="body2">
+              Author: {item?.Collection?.User?.name || item?.User?.name}
+            </Typography>
+          </Paper>
+        }
+      />
+    </Box>
   )
 }
 

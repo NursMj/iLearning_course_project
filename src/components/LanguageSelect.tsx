@@ -16,7 +16,11 @@ function LanguageSelect() {
   const { i18n } = useTranslation()
 
   return (
-    <Box sx={{ minWidth: 80 }}>
+    <Box
+      sx={{
+        minWidth: 80,
+      }}
+    >
       <ButtonGroup
         disableElevation
         variant="contained"
@@ -28,8 +32,7 @@ function LanguageSelect() {
             style={{
               backgroundColor:
                 i18n.resolvedLanguage === l ? '#fff' : 'transparent',
-              color:
-                i18n.resolvedLanguage === l ? '#444' : '',
+              color: i18n.resolvedLanguage === l ? '#444' : '',
             }}
             key={l}
             color="primary"

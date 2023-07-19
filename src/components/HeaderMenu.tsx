@@ -1,49 +1,108 @@
-import { Menu, MenuItem, IconButton } from '@mui/material'
+import { Menu, MenuItem, Box, Typography } from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { useTranslation } from 'react-i18next'
 import MyLink from '../common/MyLink'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import DarkModeSwitch from './DarkModeSwitch'
+import LanguageSelect from './LanguageSelect'
+import { setUnsetDarkMode } from '../store/darkModeReducer'
+import { useTheme } from '@mui/material/styles'
 
 const MobileMenu = (props: any) => {
   const {
+    isAdmin,
     mobileMenuId,
     mobileMoreAnchorEl,
     isMobileMenuOpen,
     handleMobileMenuClose,
-    handleProfileMenuOpen,
-    // handleLogout,
-    // user
+    handleLogout,
+    user,
+    isSigning,
+    isDarkMode,
   } = props
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const theme = useTheme()
+  const isLightTheme = theme.palette.mode === 'light'
+
+  function logout() {
+    handleMobileMenuClose()
+    handleLogout()
+  }
 
   return (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Box
+        sx={{
+          width: '300px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: isLightTheme ? '#2196f3' : 'transparent',
+          p: 1.5,
+          pr: 2.5,
+          mb: 1.5,
+        }}
+      >
+        <DarkModeSwitch
+          checked={isDarkMode}
+          onChange={() => dispatch(setUnsetDarkMode())}
+        />
+        <LanguageSelect />
+        {user.isAuth && (
+          <Typography sx={{ color: '#fff' }}>
+            <AccountCircle /> {user.data.name}
+          </Typography>
+        )}
+      </Box>
+      <MyLink
+        sx={{ display: { xs: 'block', sm: 'none' } }}
+        to="/"
+        content={<MenuItem>{t('header.title')}</MenuItem>}
+      />
+      {user.isAuth ? (
+        <>
+          {isAdmin && (
+            <MyLink
+              to="/admin"
+              content={
+                <MenuItem onClick={handleMobileMenuClose}>
+                  {t('header.menu_item3')}
+                </MenuItem>
+              }
+            />
+          )}
+          <MyLink
+            to={`/user/${user.data.id}`}
+            content={
+              <MenuItem onClick={handleMobileMenuClose}>
+                {t('header.menu_item1')}
+              </MenuItem>
+            }
+          />
+          <MyLink
+            to="/"
+            content={
+              <MenuItem onClick={logout}>{t('header.menu_item2')}</MenuItem>
+            }
+          />
+        </>
+      ) : (
+        !isSigning && (
+          <MyLink
+            to="/login"
+            content={
+              <MenuItem onClick={logout}>{t('header.sign_in')}</MenuItem>
+            }
+          />
+        )
+      )}
     </Menu>
   )
 }
@@ -56,7 +115,7 @@ const DesktopMenu = (props: any) => {
     handleMenuClose,
     isAdmin,
     handleLogout,
-    user
+    user,
   } = props
   const { t } = useTranslation()
 
@@ -80,6 +139,7 @@ const DesktopMenu = (props: any) => {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      sx={{ mt: 6 }}
     >
       {isAdmin && (
         <MyLink
@@ -99,7 +159,6 @@ const DesktopMenu = (props: any) => {
           </MenuItem>
         }
       />
-
       <MyLink
         to="/"
         content={<MenuItem onClick={logout}>{t('header.menu_item2')}</MenuItem>}
@@ -121,6 +180,8 @@ const HeaderMenu = (props: any) => {
     handleProfileMenuOpen,
     isAdmin,
     handleLogout,
+    isSigning,
+    isDarkMode,
   } = props.props
   const user = useSelector((state: any) => state.user.user)
 
@@ -136,13 +197,16 @@ const HeaderMenu = (props: any) => {
         user={user}
       />
       <MobileMenu
+        isAdmin={isAdmin}
+        user={user}
         mobileMenuId={mobileMenuId}
         mobileMoreAnchorEl={mobileMoreAnchorEl}
         isMobileMenuOpen={isMobileMenuOpen}
         handleMobileMenuClose={handleMobileMenuClose}
         handleProfileMenuOpen={handleProfileMenuOpen}
         handleLogout={handleLogout}
-        user={user}
+        isSigning={isSigning}
+        isDarkMode={isDarkMode}
       />
     </>
   )

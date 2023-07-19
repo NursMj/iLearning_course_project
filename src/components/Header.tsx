@@ -1,17 +1,8 @@
 import * as React from 'react'
-import { styled, alpha } from '@mui/material/styles'
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-  InputBase,
-} from '@mui/material'
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material'
 import { Button } from 'react-bootstrap'
-import SearchIcon from '@mui/icons-material/Search'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import MoreIcon from '@mui/icons-material/MoreVert'
+import MenuIcon from '@mui/icons-material/Menu'
 import DarkModeSwitch from './DarkModeSwitch'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUnsetDarkMode } from '../store/darkModeReducer'
@@ -22,45 +13,7 @@ import MyLink from '../common/MyLink'
 import HeaderMenu from './HeaderMenu'
 import { setIsAuth, setUser } from '../store/userReducer'
 import { showInfoToast } from '../utils/showToest'
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}))
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}))
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}))
+import SearchInput from './SearchInput'
 
 export default function Header() {
   const location = useLocation()
@@ -117,15 +70,7 @@ export default function Header() {
           >
             <MyLink to="/" content={t('header.title')} />
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder={t('header.search_placeholder')}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+          <SearchInput />
           <Box sx={{ flexGrow: 1 }} />
           <Box
             sx={{
@@ -139,9 +84,16 @@ export default function Header() {
               onChange={() => dispatch(setUnsetDarkMode())}
             />
             <LanguageSelect />
-            <Typography>{user.data.name}</Typography>
-            {user.isAuth ? (
-              isAdmin ? (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                pl: 3,
+                borderLeft: '1px solid #fff',
+              }}
+            >
+              <Typography>{user.data.name}</Typography>
+              {user.isAuth ? (
                 <IconButton
                   size="large"
                   edge="end"
@@ -154,30 +106,18 @@ export default function Header() {
                   <AccountCircle />
                 </IconButton>
               ) : (
-                <IconButton
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              )
-            ) : (
-              !isSigning && (
-                <MyLink
-                  to="/login"
-                  content={
-                    <Button variant="outline-light">
-                      {t('header.sign_in')}
-                    </Button>
-                  }
-                />
-              )
-            )}
+                !isSigning && (
+                  <MyLink
+                    to="/login"
+                    content={
+                      <Button variant="outline-light">
+                        {t('header.sign_in')}
+                      </Button>
+                    }
+                  />
+                )
+              )}
+            </Box>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -188,7 +128,7 @@ export default function Header() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MenuIcon />
             </IconButton>
           </Box>
         </Toolbar>
@@ -206,6 +146,8 @@ export default function Header() {
           handleProfileMenuOpen,
           isAdmin,
           handleLogout,
+          isSigning,
+          isDarkMode,
         }}
       />
     </Box>
