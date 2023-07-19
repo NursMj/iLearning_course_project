@@ -98,7 +98,7 @@ const MobileMenu = (props: any) => {
           <MyLink
             to="/login"
             content={
-              <MenuItem onClick={logout}>{t('header.sign_in')}</MenuItem>
+              <MenuItem>{t('header.sign_in')}</MenuItem>
             }
           />
         )
