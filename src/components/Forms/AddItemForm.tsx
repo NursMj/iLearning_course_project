@@ -66,7 +66,7 @@ function AddItemForm({ handleClose }: any) {
       await createItem({ fieldValues, fieldNames, collectionId, userId, tags })
       handleClose()
       showSuccessToast('Item created successfully!')
-      dispatch(getCollectionItems(collectionId) as any)
+      dispatch(getCollectionItems({ collectionId }) as any)
     } catch (e: any) {
       showErrorToast(e)
       console.log(e)
