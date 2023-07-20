@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import ItemCard from './ItemCard'
 
 function ItemsGrid(props: any) {
-  const { data, type, error } = props
+  const { data, type, error, setShowModal } = props
 
   if (error)
     return <Typography variant="h6">{error}. Faild to fetch data.</Typography>
@@ -20,7 +20,12 @@ function ItemsGrid(props: any) {
       }}
     >
       {data.map((item: any) => (
-        <ItemCard key={item.id} item={item} type={type} />
+        <ItemCard
+          key={item.id}
+          item={item}
+          setShowModal={setShowModal}
+          type={type}
+        />
       ))}
     </Box>
   )

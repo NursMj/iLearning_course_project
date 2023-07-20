@@ -9,14 +9,17 @@ import ImageUploader from '../ImageUploder'
 import DynamicInputFields from '../DynamicInputField'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { createCollection } from '../../http/collectionApi'
+import { createCollection, updateCollection } from '../../http/collectionApi'
 import MySpinner from '../../common/MySpinner'
 import getFields from '../../utils/getFields'
-import { getUserCollections } from '../../store/collectionsReducer'
+import {
+  getCurrentCollection,
+  getUserCollections,
+} from '../../store/collectionsReducer'
 import { getTopics } from '../../store/topicsReducer'
 import { showErrorToast, showSuccessToast } from '../../utils/showToest'
 
-function AddCollectionForm({ handleClose }: any) {
+function AddCollectionForm({ handleClose, collectionId }: any) {
   const topics = useSelector((state: any) => state.topics.topics.data)
   const topicsLoading = useSelector(
     (state: any) => state.topics.topics.isLoading
@@ -38,6 +41,12 @@ function AddCollectionForm({ handleClose }: any) {
     boolean: [],
     date: [],
   })
+  const collection = useSelector(
+    (state: any) => state.collections.currentCollection.data
+  )
+  const collectionIsLoading = useSelector(
+    (state: any) => state.collections.currentCollection.isLoading
+  )
   const dispatch = useDispatch()
   const types = ['integer', 'string', 'multiline', 'boolean', 'date']
 
@@ -62,11 +71,17 @@ function AddCollectionForm({ handleClose }: any) {
       formData.append('desc', desc)
       formData.append('topicId', selectedTopicId)
       formData.append('userId', userId)
-      formData.append('itemFields', JSON.stringify(getFields(fields)))
+      console.log(userId)
       try {
-        await createCollection(formData)
+        let res
+        if (collectionId) {
+          res = await updateCollection(formData, collectionId)
+        } else {
+          formData.append('itemFields', JSON.stringify(getFields(fields)))
+          res = await createCollection(formData)
+        }
         handleClose()
-        showSuccessToast('Collection created successfully')
+        showSuccessToast(res.message)
         dispatch(getUserCollections(userId) as any)
       } catch (e: any) {
         showErrorToast(e)
@@ -79,18 +94,29 @@ function AddCollectionForm({ handleClose }: any) {
   }
 
   useEffect(() => {
+    if (collectionId) dispatch(getCurrentCollection(collectionId) as any)
     dispatch(getTopics() as any)
   }, [])
+
+  useEffect(() => {
+    if (collectionId) {
+      setName(collection.name || '')
+      setSelectedTopicId(collection?.Topic?.id || '')
+      setDesc(collection.desc || '')
+    }
+  }, [collectionIsLoading])
+
+  if (collectionId && collectionIsLoading) return <MySpinner />
 
   return (
     <form onSubmit={handleSubmit}>
       <DialogContent sx={{ mt: 3 }}>
         <Typography variant="h5" sx={{ textAlign: 'center', mb: 3 }}>
-          {t('modal.collaction_form.title')}
+          {collectionId ? 'Eddit collection' : t('modal.collaction_form.title')}
         </Typography>
         {error && <Alert severity="warning">{error}</Alert>}
         {isLoading && <MySpinner />}
-        <Grid container spacing={2} sx={{pt: 2}}>
+        <Grid container spacing={2} sx={{ pt: 2 }}>
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -128,7 +154,7 @@ function AddCollectionForm({ handleClose }: any) {
             <TextField
               id="collection-description"
               required
-              label="Multiline"
+              label="Description (supports Markdown)"
               multiline
               fullWidth
               minRows={2}
@@ -142,21 +168,31 @@ function AddCollectionForm({ handleClose }: any) {
           </Grid>
         </Grid>
         <hr />
-        <Typography variant="h6" sx={{ textAlign: 'center', margin: '20px 0' }}>
-          Collection item fields
-        </Typography>
-        <Grid container spacing={2}>
-          {types.map((type) => (
-            <Grid item xs={12} key={type}>
-              <DynamicInputFields onChange={handleFieldsChange} type={type} />
+        {!collectionId && (
+          <>
+            <Typography
+              variant="h6"
+              sx={{ textAlign: 'center', margin: '20px 0' }}
+            >
+              Collection item fields
+            </Typography>
+            <Grid container spacing={2}>
+              {types.map((type) => (
+                <Grid item xs={12} key={type}>
+                  <DynamicInputFields
+                    onChange={handleFieldsChange}
+                    type={type}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+          </>
+        )}
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
         <Button onClick={handleClose}>Сancel</Button>
         <Button type="submit" variant="contained" onClick={handleSubmit}>
-          Add collection
+          {collectionId ? 'Save chages' : 'Add collection'}
         </Button>
       </DialogActions>
     </form>

@@ -15,7 +15,7 @@ import { getUserCollections } from '../store/collectionsReducer'
 import { showErrorToast, showInfoToast } from '../utils/showToest'
 
 function ItemCard(props: any) {
-  const { item, type } = props
+  const { item, type, setShowModal } = props
   const path = `/${type}/${item.id}`
   const isItem = type === 'item'
   const dispatch = useDispatch()
@@ -47,7 +47,7 @@ function ItemCard(props: any) {
 
   function handleEdit(e: any) {
     e.preventDefault()
-    alert('Todo hadle edit ')
+    setShowModal(item.id)
   }
 
   const ItemContent = () => {
@@ -82,8 +82,8 @@ function ItemCard(props: any) {
   return (
     <Box
       sx={{
-        m: {xs: '0 auto', sm: 0},
-        width: { xs: '90%',  sm: '270px' },
+        m: { xs: '0 auto', sm: 0 },
+        width: { xs: '90%', sm: '270px' },
       }}
     >
       <MyLink

@@ -9,6 +9,15 @@ export const createCollection = async (formData: any) => {
   return data
 }
 
+export const updateCollection = async (formData: any, id: any) => {
+  const { data } = await $authHost.put(`api/collection/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  return data
+}
+
 export const fetchCollections = async () => {
   const { data } = await $host.get('api/collection')
   return data

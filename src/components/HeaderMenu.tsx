@@ -67,7 +67,7 @@ const MobileMenu = (props: any) => {
         content={<MenuItem>{t('header.title')}</MenuItem>}
       />
       {user.isAuth ? (
-        <>
+        <Box>
           {isAdmin && (
             <MyLink
               to="/admin"
@@ -92,7 +92,7 @@ const MobileMenu = (props: any) => {
               <MenuItem onClick={logout}>{t('header.menu_item2')}</MenuItem>
             }
           />
-        </>
+        </Box>
       ) : (
         !isSigning && (
           <MyLink

@@ -29,15 +29,25 @@ function UserPage() {
   const error = useSelector((state: any) => state.collections.collections.error)
   const isOwner = checkIsOwner(user, ownerId)
   const dispatch = useDispatch()
+  const [collectionId, setCollectionId] = useState(0)
 
-  const handleClose = () => setShowModal(false)
+  const handleClose = () => {
+    setCollectionId(0)
+    setShowModal(false)
+  }
+  const handleOpenEdditForm = (id: number) => {
+    setCollectionId(id)
+    setShowModal(true)
+  }
 
   useEffect(() => {
     dispatch(checkUser() as any)
     dispatch(getUserCollections(ownerId) as any)
   }, [ownerId])
 
-  const modalContent = <AddCollectionForm handleClose={handleClose} />
+  const modalContent = (
+    <AddCollectionForm handleClose={handleClose} collectionId={collectionId} />
+  )
 
   return (
     <>
@@ -47,7 +57,14 @@ function UserPage() {
       <hr />
       <Toolbar props={{ setShowModal, isOwner }} />
       {loading && <MySpinner />}
-      {!loading && <ItemsGrid data={collections} error={error} type="collection" />}
+      {!loading && (
+        <ItemsGrid
+          data={collections}
+          setShowModal={handleOpenEdditForm}
+          error={error}
+          type="collection"
+        />
+      )}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
   )

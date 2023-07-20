@@ -11,6 +11,7 @@ import checkIsOwner from '../utils/checkIsOwner'
 import { getCurrentCollection } from '../store/collectionsReducer'
 import { getCollectionItems } from '../store/itemsReducer'
 import { checkUser } from '../store/userReducer'
+import ReactMarkdown from 'react-markdown'
 
 function CollectionPage() {
   // const { t } = useTranslation()
@@ -37,7 +38,7 @@ function CollectionPage() {
 
   const handleClose = () => setShowModal(false)
 
-  const modalContent = <AddItemForm handleClose={handleClose} />
+  const modalContent = <AddItemForm handleClose={handleClose} editing={true} />
 
   if (isLoading) return <MySpinner />
 
@@ -76,16 +77,22 @@ function CollectionPage() {
             </Box>
           </Box>
         )}
-        <Typography>
-          <b>Description:</b> {collection.desc}
+        <Typography sx={{ mt: 2 }}>
+          <b>Description:</b>
         </Typography>
+        <ReactMarkdown>{collection.desc}</ReactMarkdown>
       </Box>
       <hr />
       <Toolbar props={{ setShowModal, isOwner }} />
       {itemsLoading ? (
         <MySpinner />
       ) : (
-        <ItemsGrid data={items} error={itemsError} type="item" />
+        <ItemsGrid
+          data={items}
+          error={itemsError}
+          setShowModal={setShowModal}
+          type="item"
+        />
       )}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>
