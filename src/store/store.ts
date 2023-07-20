@@ -16,6 +16,7 @@ import collectionsReducer from './collectionsReducer'
 import itemsReducer from './itemsReducer'
 import topicsReducer from './topicsReducer'
 import tagReducer from './tagReducer'
+import commentsReducer from './commentsReducer'
 
 const persistConfig = {
   key: 'root',
@@ -33,6 +34,7 @@ const store = configureStore({
     collections: collectionsReducer,
     items: itemsReducer,
     tags: tagReducer,
+    comments: commentsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

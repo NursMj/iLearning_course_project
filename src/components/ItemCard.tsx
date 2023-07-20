@@ -30,7 +30,8 @@ function ItemCard(props: any) {
       (state: any) => state.collections.currentCollection.data.UserId
     ) || item.UserId
   const isOwner = checkIsOwner(user, ownerId)
-  const showActionBtns = location.pathname != '/' && isOwner
+  const showActionBtns =
+    location.pathname != '/' && !location.pathname.includes('tag') && isOwner
 
   async function handleDelete(e: any) {
     e.preventDefault()

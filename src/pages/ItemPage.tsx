@@ -17,6 +17,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import { createlike, deleteLike } from '../http/likeApi'
 import MyTag from '../common/MyTag'
+import Comments from '../components/Comments'
 
 function ItemPage() {
   const id = Number(useParams().id)
@@ -66,59 +67,62 @@ function ItemPage() {
   if (isLodaing) return <MySpinner />
 
   return (
-    <Card>
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box>
-            <Typography variant="h3">{item.requiredField1_value}</Typography>
-            <Typography>
-              <b>Author:</b> {item.Collection?.User.name}
-            </Typography>
-            <Typography>
-              <b>Collection:</b> {item.Collection?.name}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton onClick={handleLike}>
-              {likeLoading ? (
-                <MySpinner />
-              ) : myLike ? (
-                <ThumbUpAltIcon />
-              ) : (
-                <ThumbUpOffAltIcon />
-              )}
-            </IconButton>
-            <span>{likes}</span>
-          </Box>
-        </Box>
-
-        <hr />
-        <Grid container gap={2}>
-          {pairs.map((field: any, i: number) => (
-            <Grid item width={'100%'} key={i}>
+    <>
+      <Card sx={{mb:6}}>
+        <CardContent>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box>
+              <Typography variant="h3">{item.requiredField1_value}</Typography>
               <Typography>
-                <b>{field.name}:</b>{' '}
-                {typeof field.value !== 'boolean' ? (
-                  field.value
-                ) : field.value === true ? (
-                  <CheckBoxIcon />
-                ) : (
-                  <IndeterminateCheckBoxIcon />
-                )}
+                <b>Author:</b> {item.Collection?.User.name}
               </Typography>
-            </Grid>
-          ))}
-          <Grid item width={'100%'}>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              <b>Tags:</b>
-              {tags.map((tag: any) => (
-                <MyTag tag={tag} key={tag.id} />
-              ))}
+              <Typography>
+                <b>Collection:</b> {item.Collection?.name}
+              </Typography>
             </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton onClick={handleLike}>
+                {likeLoading ? (
+                  <MySpinner />
+                ) : myLike ? (
+                  <ThumbUpAltIcon />
+                ) : (
+                  <ThumbUpOffAltIcon />
+                )}
+              </IconButton>
+              <span>{likes}</span>
+            </Box>
+          </Box>
+
+          <hr />
+          <Grid container gap={2}>
+            {pairs.map((field: any, i: number) => (
+              <Grid item width={'100%'} key={i}>
+                <Typography>
+                  <b>{field.name}:</b>{' '}
+                  {typeof field.value !== 'boolean' ? (
+                    field.value
+                  ) : field.value === true ? (
+                    <CheckBoxIcon />
+                  ) : (
+                    <IndeterminateCheckBoxIcon />
+                  )}
+                </Typography>
+              </Grid>
+            ))}
+            <Grid item width={'100%'}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                <b>Tags:</b>
+                {tags.map((tag: any) => (
+                  <MyTag tag={tag} key={tag.id} />
+                ))}
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <Comments itemId={id}/>
+    </>
   )
 }
 
