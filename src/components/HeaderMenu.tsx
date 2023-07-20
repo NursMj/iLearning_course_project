@@ -64,7 +64,11 @@ const MobileMenu = (props: any) => {
       <MyLink
         sx={{ display: { xs: 'block', sm: 'none' } }}
         to="/"
-        content={<MenuItem>{t('header.title')}</MenuItem>}
+        content={
+          <MenuItem onClick={handleMobileMenuClose}>
+            {t('header.title')}
+          </MenuItem>
+        }
       />
       {user.isAuth ? (
         <Box>
