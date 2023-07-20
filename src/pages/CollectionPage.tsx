@@ -29,6 +29,17 @@ function CollectionPage() {
     (state: any) => state.collections.currentCollection.isLoading
   )
   const isOwner = checkIsOwner(user, collection.UserId)
+  const [itemId, setItemId] = useState(0)
+
+
+  const handleOpenEdditForm = (id: number) => {
+    setItemId(id)
+    setShowModal(true)
+  }
+  const handleClose = () => {
+    setItemId(0)
+    setShowModal(false)
+  }
 
   useEffect(() => {
     dispatch(checkUser() as any)
@@ -36,9 +47,8 @@ function CollectionPage() {
     dispatch(getCollectionItems({ collectionId }) as any)
   }, [])
 
-  const handleClose = () => setShowModal(false)
 
-  const modalContent = <AddItemForm handleClose={handleClose} editing={true} />
+  const modalContent = <AddItemForm handleClose={handleClose} itemId={itemId} />
 
   if (isLoading) return <MySpinner />
 
@@ -90,7 +100,7 @@ function CollectionPage() {
         <ItemsGrid
           data={items}
           error={itemsError}
-          setShowModal={setShowModal}
+          setShowModal={handleOpenEdditForm}
           type="item"
         />
       )}

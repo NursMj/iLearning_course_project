@@ -5,23 +5,35 @@ export const createItem = async ({
   fieldNames,
   collectionId,
   userId,
-  tags
+  tags,
 }: any) => {
   const { data } = await $authHost.post('api/item', {
     fieldValues,
     fieldNames,
     collectionId,
     userId,
-    tags
+    tags,
   })
   return data
 }
 
-export const fetchItems = async ({collectionId, tagId}: any) => {
+export const updateItem = async (
+  { fieldValues, userId, tags }: any,
+  id: any
+) => {
+  const { data } = await $authHost.put(`api/item/${id}`, {
+    fieldValues,
+    userId,
+    tags,
+  })
+  return data
+}
+
+export const fetchItems = async ({ collectionId, tagId }: any) => {
   const { data } = await $host.get('api/item', {
     params: {
       collectionId,
-      tagId
+      tagId,
     },
   })
   return data
