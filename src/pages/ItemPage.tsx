@@ -18,6 +18,9 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import { createlike, deleteLike } from '../http/likeApi'
 import MyTag from '../common/MyTag'
 import Comments from '../components/Comments'
+import io from 'socket.io-client'
+
+const socket = io(import.meta.env.VITE_API_URL)
 
 function ItemPage() {
   const id = Number(useParams().id)
@@ -62,13 +65,14 @@ function ItemPage() {
 
   useEffect(() => {
     dispatch(getCurrentItem(id) as any)
+    socket.emit('joinItemRoom', id)
   }, [id])
 
   if (isLodaing) return <MySpinner />
 
   return (
     <>
-      <Card sx={{mb:6}}>
+      <Card sx={{ mb: 6 }}>
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box>
@@ -121,7 +125,7 @@ function ItemPage() {
           </Grid>
         </CardContent>
       </Card>
-      <Comments itemId={id}/>
+      <Comments itemId={id} socket={socket} />
     </>
   )
 }

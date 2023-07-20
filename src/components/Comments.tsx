@@ -15,11 +15,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getItemComments } from '../store/commentsReducer'
 import MySpinner from '../common/MySpinner'
 import { createComment, deleteComment } from '../http/commentApi'
-import io from 'socket.io-client'
 
-const socket = io(import.meta.env.VITE_API_URL)
-
-const Comments = ({ itemId }: any) => {
+const Comments = ({ itemId, socket }: any) => {
   const comments = useSelector((state: any) => state.comments.comments.data)
   const isLoading = useSelector(
     (state: any) => state.comments.comments.isLoading
@@ -34,20 +31,12 @@ const Comments = ({ itemId }: any) => {
 
   useEffect(() => {
     dispatch(getItemComments(itemId) as any)
-    socket.emit('joinItemRoom', itemId)
-    return () => {
-      socket.emit('leaveItemRoom', itemId)
-      socket.disconnect()
-    }
   }, [itemId])
 
   useEffect(() => {
     socket.on('commentCreated', () => {
       dispatch(getItemComments(itemId) as any)
     })
-    return () => {
-      socket.off('commentCreated')
-    }
   }, [socket])
 
   const handleAddComment = async () => {
