@@ -21,7 +21,7 @@ function TagPage() {
   const error = useSelector((state: any) => state.items.items.error)
 
   useEffect(() => {
-    dispatch(getTagItems({ tagId }) as any)
+    dispatch(getTagItems(tagId) as any)
   }, [tagId])
 
   if (isLoading) return <MySpinner />

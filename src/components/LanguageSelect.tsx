@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
+import { useDispatch } from 'react-redux'
+import { setLanguage } from '../store/userReducer'
 
 interface MyObject {
   [key: string]: { title: string }
@@ -14,6 +16,12 @@ const locales: MyObject = {
 
 function LanguageSelect() {
   const { i18n } = useTranslation()
+  const dispatch = useDispatch()
+
+  const handleLanguageChange = (language: string) => {
+    i18n.changeLanguage(language)
+    dispatch(setLanguage(language))
+  }
 
   return (
     <Box
@@ -36,7 +44,7 @@ function LanguageSelect() {
             }}
             key={l}
             color="primary"
-            onClick={() => i18n.changeLanguage(l)}
+            onClick={() => handleLanguageChange(l)}
           >
             {locales[l].title}
           </Button>

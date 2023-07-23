@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { fetchSearchResults } from '../http/searchApi'
 
 export const getSearchResults = createAsyncThunk(
-  'items/getSearchResults',
+  'searchResults/getSearchResults',
   async (searchText: string) => {
     const data = await fetchSearchResults(searchText)
     return data

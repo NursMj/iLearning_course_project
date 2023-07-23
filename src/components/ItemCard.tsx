@@ -119,7 +119,7 @@ function ItemCard(props: any) {
             )}
             {isItem ? <ItemContent /> : <CollectionContent />}
             <Typography variant="body2">
-              Author: {item?.Collection?.User?.name || item?.User?.name}
+              Author: {item?.Collection?.User?.name || item?.User?.name || <em>User has been deleted</em>}
             </Typography>
           </Paper>
         }

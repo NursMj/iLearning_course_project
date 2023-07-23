@@ -2,10 +2,9 @@ import { Menu, MenuItem, Box, Typography } from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { useTranslation } from 'react-i18next'
 import MyLink from '../common/MyLink'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import DarkModeSwitch from './DarkModeSwitch'
 import LanguageSelect from './LanguageSelect'
-import { setUnsetDarkMode } from '../store/darkModeReducer'
 import { useTheme } from '@mui/material/styles'
 
 const MobileMenu = (props: any) => {
@@ -18,10 +17,8 @@ const MobileMenu = (props: any) => {
     handleLogout,
     user,
     isSigning,
-    isDarkMode,
   } = props
   const { t } = useTranslation()
-  const dispatch = useDispatch()
   const theme = useTheme()
   const isLightTheme = theme.palette.mode === 'light'
 
@@ -50,10 +47,7 @@ const MobileMenu = (props: any) => {
           mb: 1.5,
         }}
       >
-        <DarkModeSwitch
-          checked={isDarkMode}
-          onChange={() => dispatch(setUnsetDarkMode())}
-        />
+        <DarkModeSwitch />
         <LanguageSelect />
         {user.isAuth && (
           <Typography sx={{ color: '#fff' }}>

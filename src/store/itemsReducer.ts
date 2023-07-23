@@ -4,7 +4,7 @@ import extractItemFields from '../utils/extractItemFields'
 
 export const getCollectionItems = createAsyncThunk(
   'items/getCollectionItems',
-  async ({ collectionId: id }: any) => {
+  async (id: any) => {
     const data = await fetchItems({ collectionId: id })
     return data
   }
@@ -12,7 +12,7 @@ export const getCollectionItems = createAsyncThunk(
 
 export const getTagItems = createAsyncThunk(
   'items/getTagItems',
-  async ({ tagId: id }: any) => {
+  async (id: any) => {
     const data = await fetchItems({ tagId: id })
     return data
   }

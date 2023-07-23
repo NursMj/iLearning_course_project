@@ -19,6 +19,7 @@ import { createlike, deleteLike } from '../http/likeApi'
 import MyTag from '../common/MyTag'
 import Comments from '../components/Comments'
 import io from 'socket.io-client'
+import MyLink from '../common/MyLink'
 
 const socket = io(import.meta.env.VITE_API_URL)
 
@@ -33,7 +34,6 @@ function ItemPage() {
   const isLodaing = useSelector(
     (state: any) => state.items.currentItem.isLodaing
   )
-  // const error = useSelector((state: any) => state.items.currentItem.error)
   const fieldNames = useSelector(
     (state: any) => state.items.currentItem.fieldNames
   )
@@ -78,10 +78,19 @@ function ItemPage() {
             <Box>
               <Typography variant="h3">{item.requiredField1_value}</Typography>
               <Typography>
-                <b>Author:</b> {item.Collection?.User.name}
+                <b>Author:</b>{' '}
+                {item.Collection?.User ? (
+                  item.Collection?.User.name
+                ) : (
+                  <em>User has been deleted</em>
+                )}
               </Typography>
               <Typography>
-                <b>Collection:</b> {item.Collection?.name}
+                <b>Collection:</b>{' '}
+                <MyLink
+                  to={`/collection/${item.Collection?.id}`}
+                  content={item.Collection?.name}
+                />
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

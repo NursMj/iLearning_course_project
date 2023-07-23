@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { fetchTopics } from '../http/topicsApi'
 
 export const getTopics = createAsyncThunk(
-  'items/getTopics',
+  'topics/getTopics',
   async () => {
     const data = await fetchTopics()
     return data

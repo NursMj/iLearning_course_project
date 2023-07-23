@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { fetchItemComments } from '../http/commentApi'
 
 export const getItemComments = createAsyncThunk(
-  'items/getItemComments',
+  'comments/getItemComments',
   async (id: number) => {
     const data = await fetchItemComments(id)
     return data

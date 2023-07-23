@@ -1,5 +1,7 @@
 import { Switch } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { setDarkMode } from '../store/userReducer'
 
 const DarkModeSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -48,4 +50,15 @@ const DarkModeSwitch = styled(Switch)(({ theme }) => ({
   },
 }))
 
-export default DarkModeSwitch
+const DarkModeSwitchWrapper = () => {
+  const darkMode = useSelector((state: any) => state.user.user.darkMode)
+  const dispatch = useDispatch()
+
+  const handleDarkModeChange = () => {
+    dispatch(setDarkMode())
+  }
+
+  return <DarkModeSwitch checked={darkMode} onChange={handleDarkModeChange} />
+}
+
+export default DarkModeSwitchWrapper

@@ -5,7 +5,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuIcon from '@mui/icons-material/Menu'
 import DarkModeSwitch from './DarkModeSwitch'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUnsetDarkMode } from '../store/darkModeReducer'
 import LanguageSelect from './LanguageSelect'
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -79,10 +78,7 @@ export default function Header() {
               alignItems: 'center',
             }}
           >
-            <DarkModeSwitch
-              checked={isDarkMode}
-              onChange={() => dispatch(setUnsetDarkMode())}
-            />
+            <DarkModeSwitch />
             <LanguageSelect />
             <Box
               sx={{

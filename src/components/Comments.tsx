@@ -75,22 +75,28 @@ const Comments = ({ itemId, socket }: any) => {
           <Paper key={comment.id}>
             <ListItem>
               <ListItemText
-                secondary={`Posted by: ${comment.User.name}`}
+                secondary={`Posted by: ${
+                  comment.User ? (
+                    comment.User.name
+                  ) : 'User has been deleted'
+                }`}
                 primary={comment.text}
               />
               <ListItemSecondaryAction>
-                {userId === comment.User.id && (
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => handleDeleteComment(comment.id)}
-                  >
-                    {deleteLoading && deletingId === comment.id && (
-                      <MySpinner />
-                    )}
-                    <DeleteIcon />
-                  </IconButton>
-                )}
+                {comment.User
+                  ? userId === comment.User.id && (
+                      <IconButton
+                        edge="end"
+                        aria-label="delete"
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
+                        {deleteLoading && deletingId === comment.id && (
+                          <MySpinner />
+                        )}
+                        <DeleteIcon />
+                      </IconButton>
+                    )
+                  : ''}
               </ListItemSecondaryAction>
             </ListItem>
           </Paper>

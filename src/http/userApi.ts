@@ -5,7 +5,7 @@ export const registration = async (
   name: string,
   email: string,
   password: string,
-  actionType: string = 'register',
+  actionType: string = 'register'
 ) => {
   const { data } = await $host.post('api/user/registration', {
     name,
@@ -45,12 +45,30 @@ export const deleteUser = async (id: number) => {
 }
 
 export const updateUserRole = async ({ id, role }: any) => {
-  const { data } = await $authHost.put(`api/user/update-by-admin/${id}`, { role })
+  const { data } = await $authHost.put(`api/user/update-by-admin/${id}`, {
+    role,
+  })
   return data
 }
 
 export const updateUserStatus = async ({ id, blocked }: any) => {
-  const { data } = await $authHost.put(`api/user/update-by-admin/${id}`, { blocked })
+  const { data } = await $authHost.put(`api/user/update-by-admin/${id}`, {
+    blocked,
+  })
+  return data
+}
+
+export const updateUserDarkMode = async ({ id, darkMode }: any) => {
+  const { data } = await $authHost.put(`api/user/update-by-user/${id}`, {
+    darkMode,
+  })
+  return data
+}
+
+export const updateUserLanguage = async ({ id, language }: any) => {
+  const { data } = await $authHost.put(`api/user/update-by-user/${id}`, {
+    language,
+  })
   return data
 }
 

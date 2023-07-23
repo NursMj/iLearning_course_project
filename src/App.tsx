@@ -27,10 +27,10 @@ function App() {
 export default function WrappedApp() {
   const dispatch = useDispatch()
   const [isLoading, setIsloading] = useState(true)
-  const isDarkMode = useSelector((state: any) => state.darkMode.darkMode)
+  const darkMode = useSelector((state: any) => state.user.user.darkMode)
   const darkTheme = createTheme({
     palette: {
-      mode: isDarkMode ? 'dark' : 'light',
+      mode: darkMode ? 'dark' : 'light',
       primary: {
         main: '#007bff',
       },

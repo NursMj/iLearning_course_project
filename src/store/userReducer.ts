@@ -1,18 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { check, fetchAllUsers } from '../http/userApi'
+import {
+  check,
+  fetchAllUsers,
+  updateUserDarkMode,
+  updateUserLanguage,
+} from '../http/userApi'
 import { showErrorToast } from '../utils/showToest'
 
-export const getAllUsers = createAsyncThunk('items/getAllUsers', async () => {
+export const getAllUsers = createAsyncThunk('user/getAllUsers', async () => {
   const data = await fetchAllUsers()
   return data
 })
 
-export const checkUser = createAsyncThunk('items/checkUser', async () => {
+export const checkUser = createAsyncThunk('user/checkUser', async () => {
   const data = await check()
   return data
 })
 
-const userSlice = createSlice({
+const userSlice: any = createSlice({
   name: 'user',
   initialState: {
     user: {
@@ -20,6 +25,8 @@ const userSlice = createSlice({
       isLoading: true,
       error: null as any,
       isAuth: false,
+      darkMode: false,
+      language: 'en',
     },
     allUsers: {
       data: [],
@@ -34,16 +41,35 @@ const userSlice = createSlice({
     setIsAuth: (state, action) => {
       state.user.isAuth = action.payload
     },
+    setDarkMode: (state) => {
+      if (state.user.isAuth)
+        updateUserDarkMode({
+          id: state.user.data.id,
+          darkMode: !state.user.darkMode,
+        })
+      state.user.darkMode = !state.user.darkMode
+      console.log(state.user.darkMode)
+    },
+    setLanguage: (state, action) => {
+      if (state.user.isAuth)
+        updateUserLanguage({
+          id: state.user.data.id,
+          language: action.payload,
+        })
+      state.user.language = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(checkUser.pending, (state) => {
       state.user.isLoading = true
     })
 
-    builder.addCase(checkUser.fulfilled, (state, action) => {
+    builder.addCase(checkUser.fulfilled, (state, action: any) => {
       state.user.isLoading = false
       state.user.data = action.payload
       state.user.isAuth = true
+      state.user.darkMode = action.payload.darkMode
+      state.user.language = action.payload.language
     })
 
     builder.addCase(checkUser.rejected, (state, action: any) => {
@@ -70,5 +96,6 @@ const userSlice = createSlice({
   },
 })
 
-export const { setUser, setIsAuth } = userSlice.actions
+export const { setUser, setIsAuth, setDarkMode, setLanguage } =
+  userSlice.actions
 export default userSlice.reducer

@@ -71,7 +71,6 @@ function AddCollectionForm({ handleClose, collectionId }: any) {
       formData.append('desc', desc)
       formData.append('topicId', selectedTopicId)
       formData.append('userId', userId)
-      console.log(userId)
       try {
         let res
         if (collectionId) {

@@ -44,7 +44,7 @@ function CollectionPage() {
   useEffect(() => {
     dispatch(checkUser() as any)
     dispatch(getCurrentCollection(collectionId) as any)
-    dispatch(getCollectionItems({ collectionId }) as any)
+    dispatch(getCollectionItems(collectionId) as any)
   }, [])
 
 
