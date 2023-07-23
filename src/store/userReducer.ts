@@ -37,6 +37,8 @@ const userSlice: any = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user.data = action.payload
+      state.user.darkMode = action.payload.darkMode
+      state.user.language = action.payload.language
     },
     setIsAuth: (state, action) => {
       state.user.isAuth = action.payload
