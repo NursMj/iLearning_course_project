@@ -2,7 +2,9 @@ import { styled, alpha } from '@mui/material/styles'
 import { InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
-
+import { SEARCH_ROUTE } from '../utils/consts'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -45,15 +47,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchInput() {
   const { t } = useTranslation()
-  
+  const navigate = useNavigate()
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearchSubmit = (event: any) => {
+    event.preventDefault()
+    if (event.key !== 'Enter' || searchText === '') return
+    navigate(SEARCH_ROUTE + '?searchText=' + searchText)
+    setSearchText('')
+  }
+
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        value={searchText}
+        onChange={(event: any) => setSearchText(event.target.value)}
         placeholder={t('header.search_placeholder')}
         inputProps={{ 'aria-label': 'search' }}
+        onKeyUp={handleSearchSubmit}
       />
     </Search>
   )

@@ -25,14 +25,11 @@ export const fetchCollections = async () => {
 
 export const fetchUserCollections = async (id: number) => {
   const { data } = await $host.get(`api/collection/user/${id}`)
-  // console.log(id)
-  // console.log(data)
   return data
 }
 
 export const fetchLargestCollections = async () => {
   const { data } = await $host.get('api/collection/largest')
-  // console.log(data)
   return data
 }
 

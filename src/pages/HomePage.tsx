@@ -30,7 +30,9 @@ function HomePage() {
     dispatch(getLatestItems() as any)
     dispatch(getLargestCollections() as any)
     dispatch(getTags() as any)
-  }, [])
+  }, [dispatch])
+
+  if (!tags) return null
 
   return (
     <>
