@@ -8,7 +8,7 @@ import { checkUser, getAllUsers } from '../store/userReducer'
 import { useDispatch } from 'react-redux'
 import { showErrorToast, showSuccessToast } from '../utils/showToest'
 
-const DropdownMenu = ({ user }: any) => {
+const UserActionMenu = ({ user }: any) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [loading, setLoading] = useState(false)
   const isUserAdmin = user.role === 'ADMIN'
@@ -92,4 +92,4 @@ const DropdownMenu = ({ user }: any) => {
   )
 }
 
-export default DropdownMenu
+export default UserActionMenu

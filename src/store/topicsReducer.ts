@@ -1,11 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchTopics } from '../http/topicsApi'
+import { deleteTopic, fetchTopics } from '../http/topicsApi'
+import { showSuccessToast } from '../utils/showToest'
 
 export const getTopics = createAsyncThunk(
   'topics/getTopics',
   async () => {
     const data = await fetchTopics()
     return data
+  }
+)
+
+export const removeTopic = createAsyncThunk(
+  'topics/removeTopic',
+  async (id: number) => {
+    const res = await deleteTopic(id)
+    return res
   }
 )
 
@@ -16,7 +25,11 @@ const topicSlice = createSlice({
       data: [],
       isLoading: false,
       error: null as any,
-    }
+    },
+    topicDelete: {
+      isLoading: false,
+      error: null as any,
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -33,6 +46,20 @@ const topicSlice = createSlice({
     builder.addCase(getTopics.rejected, (state, action) => {
       state.topics.isLoading = false
       state.topics.error = action.error.message
+    })
+
+    builder.addCase(removeTopic.pending, (state) => {
+      state.topicDelete.isLoading = true
+    })
+
+    builder.addCase(removeTopic.fulfilled, (state, action) => {
+      state.topicDelete.isLoading = false
+      showSuccessToast(action.payload.message)
+    })
+
+    builder.addCase(removeTopic.rejected, (state, action) => {
+      state.topicDelete.isLoading = false
+      state.topicDelete.error = action.error.message
     })
   },
 })

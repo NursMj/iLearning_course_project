@@ -11,7 +11,7 @@ const fetchTopics = async () => {
 }
 
 const deleteTopic = async (id: number) => {
-  const {data} = await $authHost.delete(`api/user/${id}`)
+  const {data} = await $authHost.delete(`api/topic/${id}`)
   return data
 }
 

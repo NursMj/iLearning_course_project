@@ -13,7 +13,7 @@ import { GridColDef, GridRowParams } from '@mui/x-data-grid'
 import MySpinner from '../common/MySpinner'
 import { useEffect, useState } from 'react'
 import { getAllUsers } from '../store/userReducer'
-import DropdownMenu from '../components/DropdownMenu'
+import UserActionMenu from '../components/UserActionMenu'
 import Toolbar from '../components/ToolBar'
 import MyModalDialog from '../common/MyModalDialog'
 import { useTranslation } from 'react-i18next'
@@ -33,7 +33,6 @@ function AllUsersPage() {
   const { t } = useTranslation()
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'id' },
     { field: 'email', headerName: 'Email' },
     { field: 'name', headerName: 'Name' },
     { field: 'blocked', headerName: 'Blocked' },
@@ -43,8 +42,10 @@ function AllUsersPage() {
       headerName: 'Actions',
       disableColumnMenu: true,
       sortable: false,
+      align: 'right',
+      headerAlign: 'right',
       renderCell: ({ row }: Partial<GridRowParams>) => {
-        return <DropdownMenu user={row} />
+        return <UserActionMenu user={row} />
       },
     },
   ]
