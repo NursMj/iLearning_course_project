@@ -28,7 +28,6 @@ function ItemPage() {
   const dispatch = useDispatch()
   const userId = useSelector((state: any) => state.user.user.data.id)
   const item = useSelector((state: any) => state.items.currentItem.data)
-  const likes = useSelector((state: any) => state.items.currentItem.likes)
   const tags = useSelector((state: any) => state.items.currentItem.tags)
   const myLike = item.myLike
   const isLodaing = useSelector(
@@ -90,7 +89,7 @@ function ItemPage() {
                   <ThumbUpOffAltIcon />
                 )}
               </IconButton>
-              <span>{likes}</span>
+              <span>{item.likesCount}</span>
             </Box>
           </Box>
 
