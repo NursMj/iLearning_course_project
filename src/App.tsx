@@ -45,7 +45,12 @@ export default function WrappedApp() {
     asyncChechUser()
   }, [])
 
-  if (isLoading) return <div className='mt-5'><MySpinner /></div>
+  if (isLoading)
+    return (
+      <div className="mt-5">
+        <MySpinner />
+      </div>
+    )
 
   return (
     <ThemeProvider theme={darkTheme}>

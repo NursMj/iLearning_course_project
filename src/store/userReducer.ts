@@ -50,7 +50,6 @@ const userSlice: any = createSlice({
           darkMode: !state.user.darkMode,
         })
       state.user.darkMode = !state.user.darkMode
-      console.log(state.user.darkMode)
     },
     setLanguage: (state, action) => {
       if (state.user.isAuth)

@@ -1,12 +1,12 @@
 import { IconButton, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import MyLink from '../common/MyLink'
-import { deleteUser, updateUserRole, updateUserStatus } from '../http/userApi'
-import MySpinner from '../common/MySpinner'
-import { checkUser, getAllUsers } from '../store/userReducer'
+import MyLink from '../../common/MyLink'
+import { deleteUser, updateUserRole, updateUserStatus } from '../../http/userApi'
+import MySpinner from '../../common/MySpinner'
+import { checkUser, getAllUsers } from '../../store/userReducer'
 import { useDispatch } from 'react-redux'
-import { showErrorToast, showSuccessToast } from '../utils/showToest'
+import { showErrorToast, showSuccessToast } from '../../utils/showToest'
 
 const UserActionMenu = ({ user }: any) => {
   const [anchorEl, setAnchorEl] = useState(null)

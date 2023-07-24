@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import ItemCard from './ItemCard'
 
 function ItemsGrid(props: any) {
-  const { data, type, error, setShowModal } = props
+  const { data, type, error, setShowModal, actionsVisible = false } = props
 
   if (error)
     return <Typography variant="h6">{error}. Faild to fetch data.</Typography>
@@ -15,7 +15,7 @@ function ItemsGrid(props: any) {
       sx={{
         paddingBottom: '40px',
         display: 'flex',
-        gap: 3,
+        gap: { xs: 1, md: 3 },
         flexWrap: 'wrap',
       }}
     >
@@ -24,6 +24,7 @@ function ItemsGrid(props: any) {
           key={item.id}
           item={item}
           setShowModal={setShowModal}
+          actionsVisible={actionsVisible}
           type={type}
         />
       ))}

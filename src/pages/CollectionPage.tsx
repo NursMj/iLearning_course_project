@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import ItemsGrid from '../components/ItemsGrid'
 import Toolbar from '../components/ToolBar'
 import MyModalDialog from '../common/MyModalDialog'
@@ -12,6 +12,11 @@ import { getCurrentCollection } from '../store/collectionsReducer'
 import { getCollectionItems } from '../store/itemsReducer'
 import { checkUser } from '../store/userReducer'
 import ReactMarkdown from 'react-markdown'
+import ItemsTable from '../components/ItemsTable'
+import { GridColDef, GridRowParams } from '@mui/x-data-grid'
+import ItemActionMenu from '../components/ActionMenu/ItemActionMenu'
+import MyLink from '../common/MyLink'
+import { ITEM_ROUTE } from '../utils/consts'
 
 function CollectionPage() {
   // const { t } = useTranslation()
@@ -29,8 +34,81 @@ function CollectionPage() {
     (state: any) => state.collections.currentCollection.isLoading
   )
   const isOwner = checkIsOwner(user, collection.UserId)
+  const location = useLocation()
+  const actionsVisible =
+    (location.pathname.includes('collection') ||
+      location.pathname.includes('user')) &&
+    isOwner
   const [itemId, setItemId] = useState(0)
-
+  const isItemTable = useSelector((state: any) => state.dataView.isItemTable)
+  const columns: GridColDef[] = [
+    {
+      field: 'name',
+      headerName: 'Item name',
+      width: 200,
+      flex: 2,
+      renderCell: ({ row }: Partial<GridRowParams>) => {
+        return (
+          <MyLink
+            to={ITEM_ROUTE + '/' + row.id}
+            content={row.requiredField1_value}
+          />
+        )
+      },
+    },
+    {
+      field: 'collection',
+      headerName: 'Collection',
+      flex: 2,
+      renderCell: ({ row }: Partial<GridRowParams>) => {
+        return <Typography>{row?.Collection?.name}</Typography>
+      },
+    },
+    {
+      field: 'author',
+      headerName: 'Author',
+      flex: 2,
+      renderCell: ({ row }: Partial<GridRowParams>) => {
+        return (
+          <Typography>
+            {row?.Collection?.User?.name || <em>User has been deleted</em>}
+          </Typography>
+        )
+      },
+    },
+    {
+      field: 'likesCount',
+      headerName: 'Likes count',
+      flex: 1,
+      type: 'number',
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 70,
+      disableColumnMenu: true,
+      sortable: false,
+      align: 'right',
+      headerAlign: 'right',
+      renderCell: ({ row }: Partial<GridRowParams>) => {
+        return (
+          <ItemActionMenu
+            item={row}
+            setShowModal={handleOpenEdditForm}
+            type="collection"
+          />
+        )
+      },
+    },
+  ]
+  const MOBILE_COLUMNS = {
+    likesCount: false,
+    collection: false,
+    actions: actionsVisible,
+  }
+  const ALL_COLUMNS = {
+    actions: actionsVisible,
+  }
 
   const handleOpenEdditForm = (id: number) => {
     setItemId(id)
@@ -46,7 +124,6 @@ function CollectionPage() {
     dispatch(getCurrentCollection(collectionId) as any)
     dispatch(getCollectionItems(collectionId) as any)
   }, [])
-
 
   const modalContent = <AddItemForm handleClose={handleClose} itemId={itemId} />
 
@@ -97,12 +174,25 @@ function CollectionPage() {
       {itemsLoading ? (
         <MySpinner />
       ) : (
-        <ItemsGrid
-          data={items}
-          error={itemsError}
-          setShowModal={handleOpenEdditForm}
-          type="item"
-        />
+        <>
+          {isItemTable ? (
+            <ItemsTable
+              error={itemsError}
+              rows={items}
+              columns={columns}
+              MOBILE_COLUMNS={MOBILE_COLUMNS}
+              ALL_COLUMNS={ALL_COLUMNS}
+            />
+          ) : (
+            <ItemsGrid
+              data={items}
+              setShowModal={handleOpenEdditForm}
+              error={itemsError}
+              actionsVisible={actionsVisible}
+              type="item"
+            />
+          )}
+        </>
       )}
       <MyModalDialog props={{ showModal, handleClose, modalContent }} />
     </>

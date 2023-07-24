@@ -7,6 +7,7 @@ import topicsReducer from './topicsReducer'
 import tagReducer from './tagReducer'
 import commentsReducer from './commentsReducer'
 import searchResultsReducer from './searchResultsReducer'
+import dataViewReducer from './dataViewReducer'
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     tags: tagReducer,
     comments: commentsReducer,
     searchResults: searchResultsReducer,
+    dataView: dataViewReducer,
   },
 })
 

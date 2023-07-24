@@ -71,6 +71,8 @@ const itemsSlice = createSlice({
     builder.addCase(getCollectionItems.fulfilled, (state, action) => {
       state.items.loading = false
       state.items.data = action.payload
+      console.log(action.payload)
+
     })
 
     builder.addCase(getCollectionItems.rejected, (state, action) => {
