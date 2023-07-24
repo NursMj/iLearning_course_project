@@ -64,12 +64,7 @@ function ItemPage() {
             <Box>
               <Typography variant="h3">{item.Name}</Typography>
               <Typography>
-                <b>Author:</b>{' '}
-                {item.Collection?.User ? (
-                  item.Collection?.User.name
-                ) : (
-                  <em>User has been deleted</em>
-                )}
+                <b>Author:</b> {item.author}
               </Typography>
               <Typography>
                 <b>Collection:</b>{' '}
