@@ -82,7 +82,6 @@ const itemsSlice: any = createSlice({
     builder.addCase(getTagItems.fulfilled, (state, action) => {
       state.items.loading = false
       state.items.data = getItemsData(action.payload.Items)
-      console.log(state.items.data)
       state.items.tag = { id: action.payload.id, name: action.payload.name }
     })
 
@@ -98,7 +97,6 @@ const itemsSlice: any = createSlice({
     builder.addCase(getCurrentItem.fulfilled, (state, action) => {
       state.currentItem.isLoading = false
       state.currentItem.data = getItemsData([action.payload])[0]
-      console.log(state.currentItem.data)
       state.currentItem.tags = action.payload.Tags
     })
 
@@ -114,7 +112,6 @@ const itemsSlice: any = createSlice({
     builder.addCase(getLatestItems.fulfilled, (state, action) => {
       state.latestItems.isLoading = false
       state.latestItems.data = getItemsData(action.payload)
-      console.log(state.items.data)
     })
 
     builder.addCase(getLatestItems.rejected, (state, action) => {

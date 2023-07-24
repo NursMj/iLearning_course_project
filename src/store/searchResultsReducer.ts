@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { fetchSearchResults } from '../http/searchApi'
+import getItemsData from '../utils/getItemsData'
 
 export const getSearchResults = createAsyncThunk(
   'searchResults/getSearchResults',
@@ -29,7 +30,9 @@ const searchResultsSlice = createSlice({
     builder.addCase(getSearchResults.fulfilled, (state, action) => {
       state.searchResults.isLoading = false
       state.searchResults.collections = action.payload.collections
-      state.searchResults.items = action.payload.items
+      state.searchResults.items = getItemsData(action.payload.items)
+      console.log(action.payload.items)
+      console.log(state.searchResults.items)
     })
 
     builder.addCase(getSearchResults.rejected, (state, action) => {
