@@ -19,7 +19,6 @@ export default function Header() {
   const isSigning =
     location.pathname === '/login' || location.pathname === '/registration'
   const { t } = useTranslation()
-  const isDarkMode = useSelector((state: any) => state.darkMode.darkMode)
   const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -143,7 +142,6 @@ export default function Header() {
           isAdmin,
           handleLogout,
           isSigning,
-          isDarkMode,
         }}
       />
     </Box>

@@ -34,21 +34,8 @@ function ItemPage() {
   const isLodaing = useSelector(
     (state: any) => state.items.currentItem.isLodaing
   )
-  const fieldNames = useSelector(
-    (state: any) => state.items.currentItem.fieldNames
-  )
-  const fieldValues = useSelector(
-    (state: any) => state.items.currentItem.fieldValues
-  )
-  const pairs = Object.entries(fieldNames).map(([key, name]) => {
-    return {
-      name,
-      value: key.includes('date')
-        ? fieldValues[`${key.replace('_name', '_value')}`].slice(0, -14)
-        : fieldValues[`${key.replace('_name', '_value')}`],
-    }
-  })
   const [likeLoading, setLikeLoading] = useState(false)
+  const notToShow = ['Name', 'collection', 'author', 'myLike', 'likesCount', 'id']
 
   const handleLike = async () => {
     setLikeLoading(true)
@@ -76,7 +63,7 @@ function ItemPage() {
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box>
-              <Typography variant="h3">{item.requiredField1_value}</Typography>
+              <Typography variant="h3">{item.Name}</Typography>
               <Typography>
                 <b>Author:</b>{' '}
                 {item.Collection?.User ? (
@@ -89,7 +76,7 @@ function ItemPage() {
                 <b>Collection:</b>{' '}
                 <MyLink
                   to={`/collection/${item.Collection?.id}`}
-                  content={item.Collection?.name}
+                  content={item.collection}
                 />
               </Typography>
             </Box>
@@ -109,20 +96,23 @@ function ItemPage() {
 
           <hr />
           <Grid container gap={2}>
-            {pairs.map((field: any, i: number) => (
-              <Grid item width={'100%'} key={i}>
-                <Typography>
-                  <b>{field.name}:</b>{' '}
-                  {typeof field.value !== 'boolean' ? (
-                    field.value
-                  ) : field.value === true ? (
-                    <CheckBoxIcon />
-                  ) : (
-                    <IndeterminateCheckBoxIcon />
-                  )}
-                </Typography>
-              </Grid>
-            ))}
+            {Object.entries(item).map(
+              ([key, value]) =>
+                !notToShow.includes(key) && (
+                  <Grid item width={'100%'} key={key}>
+                    <Typography>
+                      <b>{key}:</b>{' '}
+                      {typeof value !== 'boolean' ? (
+                        <>{value}</>
+                      ) : value === true ? (
+                        <CheckBoxIcon />
+                      ) : (
+                        <IndeterminateCheckBoxIcon />
+                      )}
+                    </Typography>
+                  </Grid>
+                )
+            )}
             <Grid item width={'100%'}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 <b>Tags:</b>

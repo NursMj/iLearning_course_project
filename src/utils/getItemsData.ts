@@ -3,10 +3,11 @@ import extractItemFields from './extractItemFields'
 const getItemsData = (items: any) => {
   return items.map((item: any) => {
     const itemData: any = {}
+    if (item.myLike !== undefined) itemData.myLike = item.myLike
     itemData.id = item.id
     itemData.collection = item.Collection.name
     itemData.author = item.Collection?.User?.name || 'user has been deleted'
-    itemData.likesCount = item.likesCount
+    itemData.likesCount = item.likesCount || item?.Likes?.length || 0
     const fieldNames = extractItemFields(item.Collection)
     const fieldValues = extractItemFields(item)
     Object.entries(fieldNames).map(([key, name]) => {

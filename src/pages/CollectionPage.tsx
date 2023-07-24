@@ -43,7 +43,7 @@ function CollectionPage() {
   const isItemTable = useSelector((state: any) => state.dataView.isItemTable)
   const columns: GridColDef[] = [
     {
-      field: 'name',
+      field: 'Name',
       headerName: 'Item name',
       width: 200,
       flex: 2,
@@ -51,7 +51,7 @@ function CollectionPage() {
         return (
           <MyLink
             to={ITEM_ROUTE + '/' + row.id}
-            content={row.requiredField1_value}
+            content={row.Name}
           />
         )
       },
@@ -59,19 +59,21 @@ function CollectionPage() {
     {
       field: 'collection',
       headerName: 'Collection',
+      filterable: false,
       flex: 2,
       renderCell: ({ row }: Partial<GridRowParams>) => {
-        return <Typography>{row?.Collection?.name}</Typography>
+        return <Typography>{row.collection}</Typography>
       },
     },
     {
       field: 'author',
       headerName: 'Author',
+      filterable: false,
       flex: 2,
       renderCell: ({ row }: Partial<GridRowParams>) => {
         return (
           <Typography>
-            {row?.Collection?.User?.name || <em>User has been deleted</em>}
+            {row.author}
           </Typography>
         )
       },
@@ -86,6 +88,7 @@ function CollectionPage() {
       field: 'actions',
       headerName: 'Actions',
       width: 70,
+      filterable: false,
       disableColumnMenu: true,
       sortable: false,
       align: 'right',
@@ -95,14 +98,14 @@ function CollectionPage() {
           <ItemActionMenu
             item={row}
             setShowModal={handleOpenEdditForm}
-            type="collection"
+            type="item"
           />
         )
       },
     },
   ]
   const MOBILE_COLUMNS = {
-    likesCount: false,
+    author: false,
     collection: false,
     actions: actionsVisible,
   }

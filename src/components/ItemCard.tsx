@@ -13,13 +13,13 @@ function ItemCard(props: any) {
     return (
       <>
         <Typography variant="h6" component="div">
-          {trimTextIfLong(item.requiredField1_value, 40)}
+          {trimTextIfLong(item.Name, 40)}
         </Typography>
         <Typography color="text.secondary">
-          Collection: {item?.Collection?.name}
+          Collection: {item.Name}
         </Typography>
         <Typography color="text.secondary">
-          likes: {item?.likesCount || item?.Likes?.length || 0}
+          likes: {item.likesCount || 0}
         </Typography>
       </>
     )
@@ -62,7 +62,7 @@ function ItemCard(props: any) {
               {isItem ? <ItemContent /> : <CollectionContent />}
               <Typography variant="body2">
                 Author:{' '}
-                {item?.Collection?.User?.name || item?.User?.name || (
+                {item.author || item?.User?.name || (
                   <em>User has been deleted</em>
                 )}
               </Typography>

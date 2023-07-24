@@ -16,7 +16,7 @@ function Toolbar(props: any) {
   } = props.props
   const isItemTable = useSelector((state: any) => state.dataView.isItemTable)
   const dispatch = useDispatch()
-  const dataToExport = useSelector((state: any) => state.items.items.toExport)
+  const dataToExport = useSelector((state: any) => state.items.items.data)
   const handleExport = () => {
     if (dataToExport.length === 0) return
     downloadCSV(dataToExport, dataToExport[0].collection)

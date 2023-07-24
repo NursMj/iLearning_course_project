@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import darkModeReducer from './darkModeReducer'
 import userReducer from './userReducer'
 import collectionsReducer from './collectionsReducer'
 import itemsReducer from './itemsReducer'
@@ -11,7 +10,6 @@ import dataViewReducer from './dataViewReducer'
 
 const store = configureStore({
   reducer: {
-    darkMode: darkModeReducer,
     user: userReducer,
     topics: topicsReducer,
     collections: collectionsReducer,

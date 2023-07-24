@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { fetchItems, fetchLatestItems, fetchOneItem } from '../http/itemApi'
-import extractItemFields from '../utils/extractItemFields'
 import getItemsData from '../utils/getItemsData'
 
 export const getCollectionItems = createAsyncThunk(
@@ -39,11 +38,10 @@ export const getLatestItems = createAsyncThunk(
   }
 )
 
-const itemsSlice = createSlice({
+const itemsSlice: any = createSlice({
   name: 'items',
   initialState: {
     items: {
-      toExport: [],
       data: [],
       loading: false,
       error: null as any,
@@ -53,10 +51,7 @@ const itemsSlice = createSlice({
       data: {},
       isLoading: false,
       error: null as any,
-      fieldNames: [],
-      fieldValues: [],
       tags: [],
-      likes: 0,
     },
     latestItems: {
       data: [],
@@ -72,8 +67,7 @@ const itemsSlice = createSlice({
 
     builder.addCase(getCollectionItems.fulfilled, (state, action) => {
       state.items.loading = false
-      state.items.data = action.payload
-      state.items.toExport = getItemsData(action.payload)
+      state.items.data = getItemsData(action.payload)
     })
 
     builder.addCase(getCollectionItems.rejected, (state, action) => {
@@ -87,7 +81,8 @@ const itemsSlice = createSlice({
 
     builder.addCase(getTagItems.fulfilled, (state, action) => {
       state.items.loading = false
-      state.items.data = action.payload.Items
+      state.items.data = getItemsData(action.payload.Items)
+      console.log(state.items.data)
       state.items.tag = { id: action.payload.id, name: action.payload.name }
     })
 
@@ -102,13 +97,9 @@ const itemsSlice = createSlice({
 
     builder.addCase(getCurrentItem.fulfilled, (state, action) => {
       state.currentItem.isLoading = false
-      state.currentItem.data = action.payload
-      state.currentItem.likes = action.payload.Likes.length
+      state.currentItem.data = getItemsData([action.payload])[0]
+      console.log(state.currentItem.data)
       state.currentItem.tags = action.payload.Tags
-      state.currentItem.fieldNames = extractItemFields(
-        action.payload.Collection
-      )
-      state.currentItem.fieldValues = extractItemFields(action.payload)
     })
 
     builder.addCase(getCurrentItem.rejected, (state, action) => {
@@ -122,7 +113,8 @@ const itemsSlice = createSlice({
 
     builder.addCase(getLatestItems.fulfilled, (state, action) => {
       state.latestItems.isLoading = false
-      state.latestItems.data = action.payload
+      state.latestItems.data = getItemsData(action.payload)
+      console.log(state.items.data)
     })
 
     builder.addCase(getLatestItems.rejected, (state, action) => {
