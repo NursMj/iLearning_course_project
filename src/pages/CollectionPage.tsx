@@ -170,7 +170,9 @@ function CollectionPage() {
         <ReactMarkdown>{collection.desc}</ReactMarkdown>
       </Box>
       <hr />
-      <Toolbar props={{ setShowModal, isOwner }} />
+      <Toolbar
+        props={{ setShowModal, isOwner, exportData: true, showDataView: true }}
+      />
       {itemsLoading ? (
         <MySpinner />
       ) : (

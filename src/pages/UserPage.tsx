@@ -126,7 +126,7 @@ function UserPage() {
         {t('user.title')} {contentOwner.name}
       </Typography>
       <hr />
-      <Toolbar props={{ setShowModal, isOwner }} />
+      <Toolbar props={{ setShowModal, isOwner, showDataView: true }} />
       {loading && <MySpinner />}
       {!loading && (
         <>

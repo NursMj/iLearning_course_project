@@ -1,5 +1,5 @@
 import { Typography, useMediaQuery, useTheme } from '@mui/material'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridToolbarFilterButton } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 
 export default function DataTable({
@@ -39,7 +39,7 @@ export default function DataTable({
         }}
         pageSizeOptions={[10, 20]}
         slots={{
-          toolbar: GridToolbar,
+          toolbar: GridToolbarFilterButton,
         }}
       />
     </div>

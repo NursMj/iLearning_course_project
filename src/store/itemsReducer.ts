@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { fetchItems, fetchLatestItems, fetchOneItem } from '../http/itemApi'
 import extractItemFields from '../utils/extractItemFields'
+import getItemsData from '../utils/getItemsData'
 
 export const getCollectionItems = createAsyncThunk(
   'items/getCollectionItems',
@@ -42,6 +43,7 @@ const itemsSlice = createSlice({
   name: 'items',
   initialState: {
     items: {
+      toExport: [],
       data: [],
       loading: false,
       error: null as any,
@@ -71,8 +73,7 @@ const itemsSlice = createSlice({
     builder.addCase(getCollectionItems.fulfilled, (state, action) => {
       state.items.loading = false
       state.items.data = action.payload
-      console.log(action.payload)
-
+      state.items.toExport = getItemsData(action.payload)
     })
 
     builder.addCase(getCollectionItems.rejected, (state, action) => {
